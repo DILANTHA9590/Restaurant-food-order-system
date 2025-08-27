@@ -45,7 +45,22 @@ export class UserService {
 
 
 
-  
+
+
+
+
+
+  findAll() {
+
+
+
+
+
+
+    
+   
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }
