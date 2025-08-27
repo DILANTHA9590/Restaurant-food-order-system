@@ -45,9 +45,31 @@ export class UserService {
 
 
 
+async loginUser(loginUserDto: { email: string; password: string; }) {
 
+  const {email ,password} = loginUserDto;
 
+  const existingUser = await this.userRepository.findOne({where:{email:email}});
+  if(!existingUser){
 
+    throw new Error('User with this email does not exist');
+
+  }
+
+  const passwordMatch = await argon2.verify(existingUser.password,password);
+
+  if(!passwordMatch){
+
+    throw new Error('Invalid password');
+
+  }
+
+  return{
+    message : 'Login successful',
+    user : existingUser
+  }
+
+}
 
 
   findAll() {
