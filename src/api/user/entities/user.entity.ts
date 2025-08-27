@@ -17,8 +17,16 @@ export class User {
    @Column({nullable: false})
    name: string;
 
+
+
+    @Column({nullable: true})
+    phone: string;
+
    @Column({nullable: false ,unique:true})
    email: string;
+
+
+  
 
    @Column({nullable: false})
    password: string;
