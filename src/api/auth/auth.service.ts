@@ -61,7 +61,7 @@ export class AuthService {
     };
     const token = jwt.sign(
       payLoad, // 👉 user data (id, email, roles, etc.)
-      process.env.JWT_SECRET || 'default_secret', // 👉 secret key from .env file
+      process.env.JWT_KEY || 'default_secret', // 👉 secret key from .env file
       { expiresIn: '1h' }, // 👉 token will expire in 1 hour
     ); 
 
