@@ -4,11 +4,10 @@ import { UserModule } from './api/user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './api/user/entities/user.entity';
+import { AuthModule } from './api/auth/auth.module';
 
 @Module({
   imports: [
-    
-    
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -29,12 +28,11 @@ import { User } from './api/user/entities/user.entity';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([
-      User]),
-      
-  UserModule
-  
-  ],
+    TypeOrmModule.forFeature([User]),
 
+    UserModule,
+
+    AuthModule,
+  ],
 })
 export class AppModule {}
