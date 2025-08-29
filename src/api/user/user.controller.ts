@@ -6,15 +6,26 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/user-login.dto';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
+
   constructor(private readonly userService: UserService) {}
+  @UseGuards(JwtAuthGuard)
+
+
+   @Get('profile')
+  getProfile(@Req() req) {
+    return req.user; // decoded JWT payload
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -22,8 +33,8 @@ export class UserController {
   }
 
   @Post('login')
-  loginUser(@Body() loginUserDto: LoginUserDto) {
-    return this.userService.loginUser(loginUserDto);
+  loginUser() {
+    return this.userService.loginUser();
   }
 
   @Get()
