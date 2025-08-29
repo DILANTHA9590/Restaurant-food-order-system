@@ -23,7 +23,7 @@ import { AuthModule } from './api/auth/auth.module';
         database: configService.get<string>('DB_NAME'),
         entities: [User],
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: false,
         logging: true,
       }),
       inject: [ConfigService],
