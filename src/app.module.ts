@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './api/user/entities/user.entity';
 import { AuthModule } from './api/auth/auth.module';
+import { CategoryModule } from './api/category/category.module';
+import { MenuitemModule } from './api/menuitem/menuitem.module';
 
 @Module({
   imports: [
@@ -33,6 +35,10 @@ import { AuthModule } from './api/auth/auth.module';
     UserModule,
 
     AuthModule,
+
+    CategoryModule,
+
+    MenuitemModule,
   ],
 })
 export class AppModule {}
