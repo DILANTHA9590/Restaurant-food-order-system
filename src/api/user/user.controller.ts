@@ -13,30 +13,27 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { RolesGuard } from '../auth/role-guard/roles.guard';
+import { Roles } from '../auth/role-guard/roles.decorator';
+import { Admin } from 'typeorm';
 
 @Controller('user')
 export class UserController {
 
   constructor(private readonly userService: UserService) {}
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard ,RolesGuard)
 
 
    @Get('profile')
+     @Roles('customer', 'admin')
   getProfile(@Req() req) {
     return req.user; // decoded JWT payload
     //  getProfile(@Req() req) {
     // return this.userService.getProfile(req.user); // ✅ user එ
-  }
+  
+}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
-
-  @Post('login')
-  loginUser() {
-    return this.userService.loginUser();
-  }
+  
 
   @Get()
   findAll() {
