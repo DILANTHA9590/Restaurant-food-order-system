@@ -8,13 +8,15 @@ export class Category {
     id:string
 
     @Column("simple-json", {nullable: true})
-    image:string
+    image:string[]
 
     @Column({nullable: true , unique: true})
     categoryName:string
 
     @Column("text",{nullable: true})
     description:string
+        @Column({nullable: true})
+        rating:number
 
 
 @OneToMany(() => Menuitem, (menuitem) => menuitem.category)
