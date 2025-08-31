@@ -21,7 +21,9 @@ import { Roles } from '../auth/role-guard/roles.decorator';
 import { Admin } from 'typeorm';
 import { JwtPayload } from '../common/interfaces/jwt-payload.interface';
 import { JwtPayloadDto } from '../common/interfaces/jwt-payload.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -60,8 +62,6 @@ return {
   data:result
 }
   }
-
-
 
 
   @Delete(':id')
