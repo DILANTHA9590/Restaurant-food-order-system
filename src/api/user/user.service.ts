@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import {  ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import argon2 from 'argon2';
+import { JwtPayload } from '../common/interfaces/jwt-payload.interface';
 
 
 @Injectable()
@@ -29,10 +30,10 @@ async loginUser() {
 }
 
 
-  async findAll(searchTerm: string) {
+  async findAll(searchTerm: string) :Promise<User[]>{
   searchTerm = searchTerm || "";
 
-  const allUsers = await this.userRepository.find({
+  const allUsers:User[] = await this.userRepository.find({
     where: [
       { name: ILike(`%${searchTerm}%`) },
       { email: ILike(`%${searchTerm}%`) },
@@ -43,19 +44,67 @@ async loginUser() {
 }
 
 
-  async findOne(id:string ) {
+// get  user by 
+  async findOne( id:string ,req:JwtPayload ):Promise<User> {
+
+  if (!req) {
+    throw new UnauthorizedException('No user info found in request');
+}
 
 
-    const user = await 
+    const userData: User|null = await  this.userRepository.findOne({where:{id:req.sub}})
+
+    if(!userData){
+      throw new NotFoundException("User not found")
+    }
+
+    return userData
 
     
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+
+
+async update(id: string, updateUserDto: UpdateUserDto) {
+
+
+
+    const user: User|null = await this.userRepository.findOne({where:{id:id}})
+
+
+    if(!user){
+
+      throw new NotFoundException("User not found")
+
+    }
+
+
+
+    Object.assign(user,updateUserDto)
+
+
+    return await this.userRepository.save(user);
+
+
+    
+
+
+
+
+
+
+
+
+
+
+   
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: string) {
+
+
+
+   const user = this.userRepository.delete();
+    
   }
 }
