@@ -12,7 +12,6 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { LoginUserDto } from './dto/user-login.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 
 @Controller('user')
@@ -25,6 +24,8 @@ export class UserController {
    @Get('profile')
   getProfile(@Req() req) {
     return req.user; // decoded JWT payload
+    //  getProfile(@Req() req) {
+    // return this.userService.getProfile(req.user); // ✅ user එ
   }
 
   @Post()
