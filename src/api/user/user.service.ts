@@ -86,25 +86,20 @@ async update(id: string, updateUserDto: UpdateUserDto) {
     return await this.userRepository.save(user);
 
 
-    
-
-
-
-
-
-
-
-
-
+  
 
    
   }
 
-  remove(id: string) {
+async  remove(id: string) {
 
+      const result = await this.userRepository.delete(id);
 
+  if (result.affected === 0) {
+    throw new NotFoundException('User not found');
+  }
+  return true ||false
 
-   const user = this.userRepository.delete();
-    
+  
   }
 }
