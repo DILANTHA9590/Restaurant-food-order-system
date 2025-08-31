@@ -1,9 +1,10 @@
-import { IsArray, IsNumber, IsOptional, IsString, IsEmpty } from "class-validator";
+import { IsArray, IsNumber, IsOptional, IsString, IsNotEmpty } from "class-validator";
 
 export class CreateCategoryDto {
 
   @IsArray({ message: "Images must be an array" })
-  @IsEmpty({ message: "Images field must be empty if not provided" })
+  @IsOptional()
+  @IsNotEmpty({ message: "Images array cannot be empty" })
   image?: string[];
 
   @IsNumber({}, { message: "Rating must be a number" })
@@ -11,7 +12,7 @@ export class CreateCategoryDto {
   rating?: number;
 
   @IsString({ message: "Category name must be a string" })
-  @IsEmpty({ message: "Category name must be empty if not provided" })
+  @IsNotEmpty({ message: "Category name cannot be empty" })
   categoryName: string;
 
   @IsString({ message: "Description must be a string" })
