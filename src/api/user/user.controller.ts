@@ -25,9 +25,10 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')
 @Controller('user')
+  @UseGuards(JwtAuthGuard ,RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @UseGuards(JwtAuthGuard ,RolesGuard)
+
 
 
    @Get('profile')
