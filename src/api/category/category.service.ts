@@ -62,7 +62,28 @@ export class CategoryService {
   }
 
 
+ async updateCategory(id:string , updateCategoryDto:UpdateCategoryDto){
 
+
+
+   const existingCategory = await this.categoryRepository.findOne({where:{id:id}})
+
+    if(!existingCategory){
+      throw new NotFoundException("This category id not  found");
+    }
+
+
+    Object.assign(existingCategory,updateCategoryDto)
+
+
+  await this.categoryRepository.save(existingCategory)
+
+   return {
+    message: "Category updated successfully",
+  };
+    
+
+ }
 
 
 
