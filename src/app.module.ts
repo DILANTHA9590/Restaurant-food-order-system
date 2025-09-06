@@ -7,6 +7,7 @@ import { User } from './api/user/entities/user.entity';
 import { AuthModule } from './api/auth/auth.module';
 import { CategoryModule } from './api/category/category.module';
 import { MenuitemModule } from './api/menuitem/menuitem.module';
+import { OrderModule } from './api/order/order.module';
 
 @Module({
   imports: [
@@ -39,6 +40,8 @@ import { MenuitemModule } from './api/menuitem/menuitem.module';
     CategoryModule,
 
     MenuitemModule,
+
+    OrderModule,
   ],
 })
 export class AppModule {}
