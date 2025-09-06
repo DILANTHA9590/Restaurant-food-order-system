@@ -83,17 +83,38 @@ async findAllCategoryItem(categoryId: string) {
   };
 }
 
+async updateMenuItem(menuId: string, updateMenuitemDto: UpdateMenuitemDto) {
+  // 1. Check if menu item exists
+  const existingItem = await this.menuItemRepository.findOne({ where: { id :menuId} });
+
+  if (!existingItem) {
+    throw new NotFoundException(`Menu item not found`);
+  }
+
+  // 2. Merge existing data with updated fields
+  Object.assign(existingItem, updateMenuitemDto);
+
+  // 3. Save updated item
+  return await this.menuItemRepository.save(existingItem);
+}
+
+async removeMenuItem(id: string) {
+  // 1. Check if menu item exists
+  const existingItem = await this.menuItemRepository.findOne({ where: { id:id } });
+
+  if (!existingItem) {
+    throw new NotFoundException(`Menu item with ID ${id} not found`);
+  }
+
+  // 2. Remove item
+  await this.menuItemRepository.remove(existingItem);
+
+  return {
+    message: `Menu item with ID ${id} has been removed successfully`,
+  };
+}
 
   
 
-  updateMenuItem(id: number, updateMenuitemDto: UpdateMenuitemDto) {
-    
-
-
- 
-  }
-
-  removeMenuItem(id: number) {
-    return `This action removes a #${id} menuitem`;
-  }
+  
 }
