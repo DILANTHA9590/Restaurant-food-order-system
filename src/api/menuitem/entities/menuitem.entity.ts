@@ -1,5 +1,5 @@
 import { Category } from "src/api/category/entities/category.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
 @Entity("menuitem")
 export class Menuitem {
@@ -11,7 +11,7 @@ export class Menuitem {
     @Column({nullable:false})
     image:string
 
-    @Column({nullable:false})
+    @Column({nullable:false , unique:true})
      name : string
 
     @Column("json", { nullable:true})
@@ -38,9 +38,9 @@ export class Menuitem {
         updatedAt: Date;
 
 
-@ManyToOne(() => Category, (category) => category.menuitems)
-@JoinColumn({ name: "cat_id" })
-category: Category;
+    @ManyToOne(() => Category, (category) => category.menuitems)
+    @JoinColumn({ name: "cat_id" })
+    category: Category;
 
 }
    
