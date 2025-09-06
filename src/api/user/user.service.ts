@@ -16,19 +16,6 @@ export class UserService {
     private readonly userRepository: Repository<User>,
 
   ) {}
-  async create(createUserDto: CreateUserDto) {
-
-
-
-  }
-
-
-
-async loginUser() {
-
-
-}
-
 
   async findAll(searchTerm: string) :Promise<User[]>{
   searchTerm = searchTerm || "";
@@ -102,4 +89,36 @@ async  remove(id: string) {
 
   
   }
+
+
+
+
+
+  async setUserBlock(req:JwtPayload  ,status:boolean){
+
+    if (!req) {
+        throw new UnauthorizedException('No user info found in request')
+  }
+
+    const existingUser = await this.userRepository.findOne({where:{id:req?.sub}})
+
+
+
+    if(!existingUser){
+
+      throw new NotFoundException("User not found")
+
+    }
+
+
+
+      const saveduser = await this.userRepository
+
+
+
+          
+
+
+}
+
 }
