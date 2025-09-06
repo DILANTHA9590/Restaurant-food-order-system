@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -45,13 +45,13 @@ export class AuthService {
       where: { email: email },
     });
     if (!existingUser) {
-      throw new Error('User with this email does not exist');
+      throw new NotFoundException('User with this email does not exist');
     }
 
     const passwordMatch = await argon2.verify(existingUser.password, password);
 
     if (!passwordMatch) {
-      throw new Error('Invalid password');
+      throw new NotFoundException('Invalid password');
     }
 
     const payLoad = {
