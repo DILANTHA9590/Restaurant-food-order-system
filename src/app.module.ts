@@ -8,6 +8,7 @@ import { AuthModule } from './api/auth/auth.module';
 import { CategoryModule } from './api/category/category.module';
 import { MenuitemModule } from './api/menuitem/menuitem.module';
 import { OrderModule } from './api/order/order.module';
+import { OrderedItemModule } from './api/ordered-item/ordered-item.module';
 
 @Module({
   imports: [
@@ -42,6 +43,8 @@ import { OrderModule } from './api/order/order.module';
     MenuitemModule,
 
     OrderModule,
+
+    OrderedItemModule,
   ],
 })
 export class AppModule {}
