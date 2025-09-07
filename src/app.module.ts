@@ -9,6 +9,10 @@ import { CategoryModule } from './api/category/category.module';
 import { MenuitemModule } from './api/menuitem/menuitem.module';
 import { OrderModule } from './api/order/order.module';
 import { OrderedItemModule } from './api/ordered-item/ordered-item.module';
+import { Category } from './api/category/entities/category.entity';
+import { Menuitem } from './api/menuitem/entities/menuitem.entity';
+import { Order } from './api/order/entities/order.entity';
+import { OrderedItem } from './api/ordered-item/entities/ordered-item.entity';
 
 @Module({
   imports: [
@@ -25,14 +29,14 @@ import { OrderedItemModule } from './api/ordered-item/ordered-item.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User],
+        entities: [User,Category,Menuitem,Order ,OrderedItem],
         autoLoadEntities: true,
         synchronize: false,
         logging: true,
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem]),
 
     UserModule,
 
