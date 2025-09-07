@@ -1,3 +1,4 @@
+import { OrderedItem } from "src/api/ordered-item/entities/ordered-item.entity";
 import { User } from "src/api/user/entities/user.entity";
 import { Column, CreateDateColumn, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { PrimaryGeneratedColumn } from "typeorm/browser";
@@ -16,9 +17,12 @@ export class Order {
     @Column("decimal",{nullable:false}) // i dicide this first creatd ordered item tbale and after create order order table creatw
     //with it total price   
     totalPrice:number
+    
+    
+
 
     @Column("decimal",{nullable:false})
-    discountPrice:number
+        discountPrice:number
 
         @Column({nullable:false})
         email:string
@@ -35,7 +39,11 @@ createdAt:Date
 @UpdateDateColumn({type:"timestamp"})
 UpdatedAt:Date
 
+@ManyToOne(()=>User,(user)=>user.orders,{onDelete:"CASCADE"})
+user:User
 
+@OneToMany(()=>OrderedItem,(ordereditem)=>ordereditem.order,{cascade:true})
+orderedItems:OrderedItem[]
 
 
 }
