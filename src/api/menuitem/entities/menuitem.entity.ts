@@ -9,10 +9,8 @@ export class Menuitem {
 
     @PrimaryGeneratedColumn("uuid")
     id : string
-
-    @Column({nullable:false})
-    image:string
-
+    @Column("simple-json", {nullable: true})
+    image:string[]
     @Column({nullable:false , unique:true})
      name : string
 
@@ -20,7 +18,7 @@ export class Menuitem {
      altNames : string[]
 
     @Column({nullable:false, default: 0})
-    lastrice:number
+    lastPrice:number
     
     @Column({nullable:false, default: 0})
    price:number
