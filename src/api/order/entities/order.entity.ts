@@ -1,49 +1,42 @@
+import { Entity, Column, CreateDateColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { OrderedItem } from "src/api/ordered-item/entities/ordered-item.entity";
 import { User } from "src/api/user/entities/user.entity";
-import { Column, CreateDateColumn, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
-import { PrimaryGeneratedColumn } from "typeorm/browser";
 
+@Entity("order")
 export class Order {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
+  @Column({ nullable: false, unique: true })
+  orderId: string;
 
-    @PrimaryGeneratedColumn("uuid")
-    id:string
+  @Column("decimal", { precision: 10, scale: 2, nullable: false })
+  totalPrice: number;
 
+  @Column("decimal", { precision: 10, scale: 2, nullable: false })
+  discountPrice: number;
 
-    @Column({nullable:false,unique:true})
-    OrderId:string
+  @Column({ nullable: false })
+  email: string;
 
+  @Column({ nullable: false })
+  mobileNo: string;
 
-    @Column("decimal",{nullable:false}) // i dicide this first creatd ordered item tbale and after create order order table creatw
-    //with it total price   
-    totalPrice:number
-    
-    
+  @Column({ nullable: false })
+  paymentId: string;
 
+  @Column({ nullable: false })
+  address: string;
 
-    @Column("decimal",{nullable:false})
-        discountPrice:number
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt: Date;
 
-        @Column({nullable:false})
-        email:string
-        @Column({nullable:false})
-        mobileNo: string
-        @Column({nullable:false})
-        paymentId:string
-        @Column({nullable:false})
-address:string
+  @UpdateDateColumn({ type: "timestamp" })
+  updatedAt: Date;
 
-@CreateDateColumn({type:"timestamp"})
-createdAt:Date
+  @ManyToOne(() => User, (user) => user.orders, { onDelete: "CASCADE" })
+  user: User;
 
-@UpdateDateColumn({type:"timestamp"})
-UpdatedAt:Date
-
-@ManyToOne(()=>User,(user)=>user.orders,{onDelete:"CASCADE"})
-user:User
-
-@OneToMany(()=>OrderedItem,(ordereditem)=>ordereditem.order,{cascade:true})
-orderedItems:OrderedItem[]
-
-
+  @OneToMany(() => OrderedItem, (orderedItem) => orderedItem.order, { cascade: true })
+  orderedItems: OrderedItem[];
 }
