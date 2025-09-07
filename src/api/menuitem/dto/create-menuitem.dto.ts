@@ -2,10 +2,11 @@ import { IsArray, IsNumber, IsOptional, IsString, IsBoolean, IsNotEmpty } from "
 
 export class CreateMenuitemDto {
 
-  @IsString({ message: "Image must be a string (URL or file path)" })
-  @IsNotEmpty({ message: "Image cannot be empty" })
-  image: string;
-
+  @IsArray({ message: "Images must be an array" })
+  @IsOptional()
+  @IsNotEmpty({ message: "Images array cannot be empty" })
+  image?: string[];
+  
   @IsString({ message: "Name is required and must be a string" })
   @IsNotEmpty({ message: "Name cannot be empty" })
   name: string;
