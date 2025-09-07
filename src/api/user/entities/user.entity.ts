@@ -1,7 +1,9 @@
+import { Order } from 'src/api/order/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -44,7 +46,9 @@ export class User {
 
   @UpdateDateColumn({ nullable: false })
   updatedAt: Date;
+
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 }
 
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNmI5N2M4Ni04ODNhLTQ4NjctYmIwZS0wN2NjMDA0Yzg4MzAiLCJlbWFpbCI6Im1la3RhQGV4YW1wbGUuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzU3MTI3MDIxLCJleHAiOjE3NTcxMzA2MjF9.GtZxzZsI2WKoPvEC0vrSTNztd3VS5zxUMkdOAUBn10c    customer
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MGJjNjVkYi0xZDNjLTRmNmEtOTY1Yi1hZTI0ZDE0ZTRiY2EiLCJlbWFpbCI6Im1la3RhYUBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NzEyNzIxMywiZXhwIjoxNzU3MTMwODEzfQ.UXRZdEMWhExDvZub1o0YmnZDidiefeoj_NW1Xc6T2F8 admin
