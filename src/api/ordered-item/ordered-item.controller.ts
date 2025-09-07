@@ -9,7 +9,7 @@ export class OrderedItemController {
 
   @Post()
   create(@Body() createOrderedItemDto: CreateOrderedItemDto) {
-    return this.orderedItemService.create(createOrderedItemDto);
+    // return this.orderedItemService.create(createOrderedItemDto);
   }
 
   @Get()
