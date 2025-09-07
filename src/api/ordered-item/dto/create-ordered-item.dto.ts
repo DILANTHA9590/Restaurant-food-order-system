@@ -10,15 +10,20 @@ export class CreateOrderedItemDto {
 
   @IsNotEmpty()
   @IsInt({ message: "Quantity must be an integer number" })
-  quantity?: number;
+  quantity: number;
 
   @IsOptional()
   @IsNumber({}, { message: "Last price must be a valid number" })
   lastprice?: number;
 
+  @IsOptional()
+@IsNumber({}, { message: "Total must be a number" })
+  @IsNotEmpty({ message: "Total is required" })
+  total?: number;  // quantity * lastPrice
+
   @IsArray({ message: "Images must be an array" })
   @IsOptional()
-  @IsNotEmpty({ message: "Images array cannot be empty" })
+  @IsNotEmpty({ message: "Images array cannot be e mpty" })
   image?: string[];
 
   @IsOptional()
