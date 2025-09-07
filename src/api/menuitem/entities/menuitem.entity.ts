@@ -1,5 +1,6 @@
 import { Category } from "src/api/category/entities/category.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { OrderedItem } from "src/api/ordered-item/entities/ordered-item.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
 
 @Entity("menuitem")
@@ -19,10 +20,10 @@ export class Menuitem {
      altNames : string[]
 
     @Column({nullable:false, default: 0})
-    price:number
+    lastrice:number
     
     @Column({nullable:false, default: 0})
-    lastPrice:number
+   price:number
 
     @Column("text",{nullable: true})
     description:string
@@ -42,6 +43,10 @@ export class Menuitem {
     @ManyToOne(() => Category, (category) => category.menuitems)
     @JoinColumn({ name: "cat_id" })
     category: Category;
+
+    @OneToMany(()=>OrderedItem,(ordereditem)=>ordereditem.menuitem)
+    orderedItems:OrderedItem[]
+
 
 }
    
