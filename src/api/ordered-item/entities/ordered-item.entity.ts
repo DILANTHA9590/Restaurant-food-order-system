@@ -1,28 +1,27 @@
-import { IsString, IsNotEmpty, IsNumber, IsUUID } from "class-validator";
+import { Menuitem } from "src/api/menuitem/entities/menuitem.entity"
+import { Order } from "src/api/order/entities/order.entity"
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 
-export class CreateOrderedItemDto {
-  @IsString({ message: "Product name must be a string" })
-  @IsNotEmpty({ message: "Product name is required" })
-  productName: string;
+@Entity("ordered_item")
+export class OrderedItem {
+    @PrimaryGeneratedColumn("uuid")
+    id: string
 
-  @IsNumber({}, { message: "Quantity must be a number" })
-  @IsNotEmpty({ message: "Quantity is required" })
-  quantity: number;
+    @Column({nullable:false})
+    ProductName: string   // snapshot of product name
 
-  @IsNumber({}, { message: "Last price must be a valid number" })
-  @IsNotEmpty({ message: "Last price is required" })
-  lastPrice: number;
+    @Column({nullable:false})
+    quantity: number
 
-  @IsString({ message: "Image URL must be a string" })
-  @IsNotEmpty({ message: "Image is required" })
-  image: string;
+    @Column("decimal",{nullable:false})
+    lastprice: number     // snapshot of price at order time
 
-  // Relationship walata ids gannawa
-//   @IsUUID("all", { message: "Invalid Order ID format" })
-//   @IsNotEmpty({ message: "Order ID is required" })
-//   orderId: string;
+    @Column("simple-json", {nullable: true})
+    image:string[]      // snapshot of product image
 
-//   @IsUUID("all", { message: "Invalid MenuItem ID format" })
-//   @IsNotEmpty({ message: "MenuItem ID is required" })
-//   menuitemId: string;
+    @ManyToOne(()=>Order,(order)=>order.orderedItems,{onDelete:"CASCADE"})  
+    order: Order
+
+    @ManyToOne(()=>Menuitem,(menuitem)=>menuitem.orderedItems,{onDelete:"CASCADE"})
+    menuitem: Menuitem
 }
