@@ -1,4 +1,6 @@
-import { IsString, IsNotEmpty, IsEmail, IsNumber, IsUUID } from "class-validator";
+import { Type } from "class-transformer";
+import { IsString, IsNotEmpty, IsEmail, IsNumber, IsUUID, IsOptional, IsArray, ValidateNested } from "class-validator";
+import { CreateOrderedItemDto } from "src/api/ordered-item/dto/create-ordered-item.dto";
 
 export class CreateOrderDto {
   @IsString({ message: "Order ID must be a string" })
@@ -28,6 +30,16 @@ export class CreateOrderDto {
   @IsString({ message: "Address must be a string" })
   @IsNotEmpty({ message: "Address is required" })
   address: string;
+
+
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({each:true})
+  @Type(()=> CreateOrderedItemDto)
+  orderedItems:CreateOrderedItemDto[]
+  
+
 
 //   // relationship walata input
 //   @IsUUID("all", { message: "Invalid user ID format" })
