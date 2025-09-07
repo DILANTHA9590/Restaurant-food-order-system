@@ -1,15 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { RolesGuard } from '../auth/role-guard/roles.guard';
+import { JwtPayloadDto } from '../common/interfaces/jwt-payload.dto';
 
 @Controller('order')
+@UseGuards(JwtAuthGuard,RolesGuard)
+
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
+  create(@Req()req:{user:JwtPayloadDto} ,@Body() createOrderDto: CreateOrderDto) {
+    return this.orderService.create(req.user, createOrderDto);
   }
 
   @Get()
