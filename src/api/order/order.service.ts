@@ -35,7 +35,7 @@ export class OrderService {
 
   const count = await this.orderRepository.count()
   const randomSixDigit = Math.floor(100000 + Math.random() * 90000000);
-  const orderId = randomSixDigit.toString() + count.toString()
+  const orderId ="ORD" + randomSixDigit.toString() + count.toString()
 
   const newOrder = this.orderRepository.create({...createOrderDto,orderId:orderId})
 
@@ -64,7 +64,7 @@ const savedOrder = await this.orderRepository.save({
     const setOrderItem = {
 
       productName :findItem.name,
-      lastPrice : findItem.lastPrice,
+      lastprice : findItem.lastPrice,
       total : menuItemQtyTotal,
       image : findItem.image,
       quantity : item.quantity
@@ -85,6 +85,14 @@ const savedOrder = await this.orderRepository.save({
      totalPrice : allProductTotal
     })    
     
+
+
+
+    return {
+      order : await this.orderRepository.findOne({where:{id:savedOrder.id}}),
+      orderedItems : await this.orderedItemRepository.find({where:{order:{id:savedOrder.id}}}),
+
+    }
 
   
 
