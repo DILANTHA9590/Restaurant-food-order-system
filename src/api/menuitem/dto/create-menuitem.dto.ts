@@ -31,7 +31,7 @@ export class CreateMenuitemDto {
   @IsOptional()
   availability?: boolean;
 
-  @IsString({ message: "Category ID must be a string" })
-  @IsNotEmpty({ message: "Category ID cannot be empty" })
-  categoryId: string;
+  // @IsString({ message: "Category ID must be a string" })
+  // @IsNotEmpty({ message: "Category ID cannot be empty" })
+  // categoryId: string;
 }
