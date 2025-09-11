@@ -4,7 +4,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity("ordered_item")
 export class OrderedItem {
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn("uuid")  
     id: string
 
     @Column({nullable:false})
