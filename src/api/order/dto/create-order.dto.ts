@@ -4,16 +4,16 @@ import { CreateOrderedItemDto } from "src/api/ordered-item/dto/create-ordered-it
 
 export class CreateOrderDto {
   @IsString({ message: "Order ID must be a string" })
-  @IsNotEmpty({ message: "Order ID is required" })
-  orderId: string;
+  @IsOptional()
+  orderId?: string;
 
   @IsNumber({}, { message: "Total price must be a valid number" })
-  @IsNotEmpty({ message: "Total price is required" })
-  totalPrice: number;
+  @IsOptional()
+  totalPrice?: number;
 
   @IsNumber({}, { message: "Discount price must be a valid number" })
-  @IsNotEmpty({ message: "Discount price is required" })
-  discountPrice: number;
+  @IsOptional()
+  discountPrice?: number;
 
   @IsEmail({}, { message: "Invalid email format" })
   @IsNotEmpty({ message: "Email is required" })
@@ -24,7 +24,7 @@ export class CreateOrderDto {
   mobileNo: string;
 
   @IsString({ message: "Payment ID must be a string" })
-  @IsNotEmpty({ message: "Payment ID is required" })
+  @IsOptional()
   paymentId: string;
   
 
