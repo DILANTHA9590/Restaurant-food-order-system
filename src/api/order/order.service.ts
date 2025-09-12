@@ -157,11 +157,21 @@ searchTerm || ""
     statusCode: HttpStatus.OK
   };
 
-
-
-
-
   }
+
+
+
+    async deleteAllOrders(){
+
+      await this.orderRepository.clear();
+      return{
+         message: "All orders deleted successfully",
+        statusCode: HttpStatus.OK
+      }
+
+
+
+    }
 
 
   findOne(id: number) {
