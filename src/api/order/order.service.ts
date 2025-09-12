@@ -1,4 +1,4 @@
-import { HttpCode, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpCode, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -126,7 +126,7 @@ async getAllOrders(searchTerm:string,page:number ,limit:number) {
 
   }
 
- async getOrdersByCustomerId(id:string, searchTerm:string, page:number , limit:number ,req:JwtPayload){
+ async getOrdersByCustomerId(searchTerm:string, page:number , limit:number ,req:JwtPayload){
  const {sub}= req
     
 searchTerm || ""
@@ -169,20 +169,43 @@ searchTerm || ""
         statusCode: HttpStatus.OK
       }
 
-
-
     }
 
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
-  }
-
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
-  }
-
   remove(id: number) {
-    return `This action removes a #${id} order`;
+
   }
+
+  
+  async deleteOrderUsingId(id:string){
+
+
+    const existingOrder= await this.orderRepository.findOne({where:{id:id}})
+
+    if(!existingOrder){
+
+      throw new NotFoundException("NO order found this id ")
+
+    }
+
+    await this.orderRepository.remove(existingOrder)
+
+    return{
+      message:"order deleted successfully",
+      statusCode:HttpStatus.OK,
+    }
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+  
 }
