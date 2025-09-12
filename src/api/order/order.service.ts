@@ -126,7 +126,42 @@ async getAllOrders(searchTerm:string,page:number ,limit:number) {
 
   }
 
+ async getOrdersByCustomerId(id:string, searchTerm:string, page:number , limit:number ,req:JwtPayload){
+ const {sub}= req
+    
+searchTerm || ""
+  page || 1
+  limit || 10
 
+ const [data, total] = await this.orderRepository.findAndCount({
+  where: { orderId: ILike(`%${searchTerm}%`),
+   user:{id:sub}
+ },
+  
+
+  skip: (page - 1) * limit,
+  take: limit,
+  order: { createdAt: "DESC" },
+  relations:["orderedItems"]
+
+
+});
+
+ return {
+  
+    data,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
+    statusCode: HttpStatus.OK
+  };
+
+
+
+
+
+  }
 
 
   findOne(id: number) {
