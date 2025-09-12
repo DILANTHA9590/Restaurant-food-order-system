@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Query, Search } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { RolesGuard } from '../auth/role-guard/roles.guard';
 import { JwtPayloadDto } from '../common/interfaces/jwt-payload.dto';
+import { Roles } from '../auth/role-guard/roles.decorator';
 
 @Controller('order')
 @UseGuards(JwtAuthGuard,RolesGuard)
@@ -16,24 +17,30 @@ export class OrderController {
   create(@Req()req:{user:JwtPayloadDto} ,@Body() createOrderDto: CreateOrderDto) {
     return this.orderService.create(req.user, createOrderDto);
   }
-
+  
+  
   @Get()
-  findAll() {
-    return this.orderService.findAll();
+  @Roles('admin')
+  getAllOrders(@Query("serachTerm") searchTerm:string,@Query("page") page:number,@Query("limit") limit:number) {
+    return this.orderService.getAllOrders(searchTerm,page,limit);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
+  @Get("id")
+  @Roles('admin','customer')
+  findOne( @Req()req:{user:JwtPayloadDto}, @Query("searchTerm") seaarchTerm:string ,page:number ,limit:number) {
+    return this.orderService.getOrdersByCustomerId(seaarchTerm,page,limit,req.user);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
-  }
-
+  @Roles('admin','customer')
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderService.remove(+id);
+  deleteOrderUsingId(@Param('id') id: string) {
+    return this.orderService.deleteOrderUsingId(id);
   }
+
+  @Roles('admin')
+  @Delete("delete/all")
+  deleteAllOrders() {
+    return this.orderService.deleteAllOrders();
+  }
+
 }
