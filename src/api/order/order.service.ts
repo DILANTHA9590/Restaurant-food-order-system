@@ -170,12 +170,6 @@ searchTerm || ""
       }
 
     }
-
-
-  remove(id: number) {
-
-  }
-
   
   async deleteOrderUsingId(id:string){
 
@@ -194,13 +188,6 @@ searchTerm || ""
       message:"order deleted successfully",
       statusCode:HttpStatus.OK,
     }
-
-
-
-
-
-
-
 
 
   }
