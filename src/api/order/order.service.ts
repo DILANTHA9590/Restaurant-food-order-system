@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { JwtPayload } from '../common/interfaces/jwt-payload.interface';
 import { User } from '../user/entities/user.entity';
 import { OrderedItem } from '../ordered-item/entities/ordered-item.entity';
@@ -95,13 +95,39 @@ const savedOrder = await this.orderRepository.save({
     }
 
   
+  }
 
+
+
+async getAllOrders(searchTerm:string,page:number ,limit:number) {
+
+  searchTerm || ""
+  page || 1
+  limit || 10
+
+ const [data, total] = await this.orderRepository.findAndCount({
+  where: { orderId: ILike(`%${searchTerm}%`) },
+  skip: (page - 1) * limit,
+  take: limit,
+  order: { createdAt: "DESC" },
+  relations:["orderedItems"]
+
+
+});
+
+ return {
+    data,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
+    statusCode: HttpStatus.OK
+  };
 
   }
 
-  findAll() {
-    return `This action returns all order`;
-  }
+
+
 
   findOne(id: number) {
     return `This action returns a #${id} order`;
