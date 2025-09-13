@@ -28,14 +28,14 @@ export class OrderService {
   
 
   async create(req:JwtPayload ,createOrderDto: CreateOrderDto) {
-
-    const {sub}= req
+  
+  const {sub}= req
     
   const {orderedItems}= createOrderDto
 
   const count = await this.orderRepository.count()
   const randomSixDigit = Math.floor(100000 + Math.random() * 90000000);
-  const orderId ="ORD" + randomSixDigit.toString() + count.toString()
+  const orderId ="ORD-" + randomSixDigit.toString() + count.toString()
 
   const newOrder = this.orderRepository.create({...createOrderDto,orderId:orderId})
 
