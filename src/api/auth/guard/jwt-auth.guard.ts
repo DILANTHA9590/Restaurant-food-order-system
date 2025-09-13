@@ -10,17 +10,18 @@ export class JwtAuthGuard implements CanActivate {
     const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {
-      // token නැත්තම් 그냥 allow
+     
       return true;
     }
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_KEY || 'default_secret');
+      console.log("jwt Errr",decoded);
       request.user = decoded;
       return true;
     } catch (err) {
-      // invalid / expired token නම් => reject කරන්න instead of skip
-      throw new Error("Unauthorized"); // ⚠️ එක optional guard නම් මේක just req.user = null කරන්නත් පුළුවන්
+     
+      throw new UnauthorizedException("Expired Token"); 
     }
   }
 }
