@@ -14,7 +14,9 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
+    @Roles('admin','customer')
   create(@Req()req:{user:JwtPayloadDto} ,@Body() createOrderDto: CreateOrderDto) {
+
     return this.orderService.create(req.user, createOrderDto);
   }
   
@@ -27,8 +29,8 @@ export class OrderController {
 
   @Get("id")
   @Roles('admin','customer')
-  findOne( @Req()req:{user:JwtPayloadDto}, @Query("searchTerm") seaarchTerm:string ,page:number ,limit:number) {
-    return this.orderService.getOrdersByCustomerId(seaarchTerm,page,limit,req.user);
+  findOne( @Req()req:{user:JwtPayloadDto}, @Query("searchTerm") searchTerm:string ,@Query()page:number ,@Query()limit:number) {
+    return this.orderService.getOrdersByCustomerId(searchTerm,page,limit,req.user);
   }
 
   @Roles('admin','customer')
