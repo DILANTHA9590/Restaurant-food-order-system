@@ -30,6 +30,9 @@ export class OrderService {
   async create(req:JwtPayload ,createOrderDto: CreateOrderDto) {
   
   const {sub}= req
+
+    
+  console.log("sub",req)
     
   const {orderedItems}= createOrderDto
 
@@ -37,12 +40,11 @@ export class OrderService {
   const randomSixDigit = Math.floor(100000 + Math.random() * 90000000);
   const orderId ="ORD-" + randomSixDigit.toString() + count.toString()
 
-  const newOrder = this.orderRepository.create({...createOrderDto,orderId:orderId})
+  const newOrder = this.orderRepository.create({...createOrderDto,orderId:orderId,
+      user:{id:sub} as User
+  })
 
-const savedOrder = await this.orderRepository.save({
-  ...newOrder,
-  userId:{id:sub} as User
-})
+const savedOrder = await this.orderRepository.save(newOrder)
   
 
      let allProductTotal = 0
@@ -101,9 +103,9 @@ const savedOrder = await this.orderRepository.save({
 
 async getAllOrders(searchTerm:string,page:number ,limit:number) {
 
-  searchTerm || ""
-  page || 1
-  limit || 10
+  searchTerm =searchTerm|| ""
+  page= page || 1
+  limit = limit || 10
 
  const [data, total] = await this.orderRepository.findAndCount({
   where: { orderId: ILike(`%${searchTerm}%`) },
@@ -129,20 +131,23 @@ async getAllOrders(searchTerm:string,page:number ,limit:number) {
  async getOrdersByCustomerId(searchTerm:string, page:number , limit:number ,req:JwtPayload){
  const {sub}= req
     
-searchTerm || ""
-  page || 1
-  limit || 10
+searchTerm = searchTerm || ""
+  page = page || 1
+  limit = limit || 10
 
  const [data, total] = await this.orderRepository.findAndCount({
-  where: { orderId: ILike(`%${searchTerm}%`),
-   user:{id:sub}
+
+  where: {
+       user:{id:sub},
+     orderId: ILike(`%${searchTerm}%`),
+
  },
   
 
   skip: (page - 1) * limit,
   take: limit,
   order: { createdAt: "DESC" },
-  relations:["orderedItems"]
+  relations:["orderedItems","user"]
 
 
 });
@@ -192,6 +197,10 @@ searchTerm || ""
 
   }
 
+
+
+
+  
 
 
   

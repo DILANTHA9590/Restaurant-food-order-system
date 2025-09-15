@@ -29,7 +29,7 @@ export class OrderController {
 
   @Get("id")
   @Roles('admin','customer')
-  findOne( @Req()req:{user:JwtPayloadDto}, @Query("searchTerm") searchTerm:string ,@Query()page:number ,@Query()limit:number) {
+  findOne( @Req()req:{user:JwtPayloadDto}, @Query("searchTerm") searchTerm:string ,@Query('page')page:number ,@Query('limit')limit:number) {
     return this.orderService.getOrdersByCustomerId(searchTerm,page,limit,req.user);
   }
 
