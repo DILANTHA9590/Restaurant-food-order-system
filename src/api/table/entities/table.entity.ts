@@ -1,7 +1,7 @@
 import { Booking } from "src/api/booking/entities/booking.entity";
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
-export enum RoomStatus {
+export enum TableStatus {
   BOOKED = "Booked",
   AVAILABLE = "Available",
 }
@@ -17,10 +17,10 @@ export class Table {
   @Column({
     nullable: false,
     type: "enum",
-    enum: RoomStatus,
-    default: RoomStatus.AVAILABLE,
+    enum: TableStatus,
+    default: TableStatus.AVAILABLE,
   })
-  status: RoomStatus;
+  status: TableStatus;
 
   @Column("simple-json", { nullable: false })
   image: string[];
