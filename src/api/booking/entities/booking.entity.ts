@@ -1,6 +1,7 @@
 import { flatten } from '@nestjs/common';
-import { Room } from 'src/api/room/entities/room.entity';
 import { User } from 'src/api/user/entities/user.entity';
+import { Table } from 'src/api/table/entities/table.entity';
+
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -64,10 +65,9 @@ export class Booking {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-   // Relations
-  @ManyToOne(() => Room, (room) => room.bookings, { eager: true })
-  @JoinColumn({ name: "roomId" })
-  room: Room;
+ @ManyToOne(() => Table, (table) => table.bookings, { eager: true })
+  @JoinColumn({ name: "tableId" }) 
+ table: Table;
 
    // User relation
   @ManyToOne(() => User, (user) => user.bookings, { eager: true })
