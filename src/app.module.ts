@@ -15,6 +15,8 @@ import { Order } from './api/order/entities/order.entity';
 import { OrderedItem } from './api/ordered-item/entities/ordered-item.entity';
 import { BookingModule } from './api/booking/booking.module';
 import { Booking } from './api/booking/entities/booking.entity';
+import { TableModule } from './api/table/table.module';
+import { Table } from './api/table/entities/table.entity';
 
 @Module({
   imports: [
@@ -31,7 +33,7 @@ import { Booking } from './api/booking/entities/booking.entity';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User,Category,Menuitem,Order ,OrderedItem,Booking],
+        entities: [User,Category,Menuitem,Order ,OrderedItem,Booking,Table],
         autoLoadEntities: true,
         synchronize: false,
         logging: true,
@@ -53,6 +55,7 @@ import { Booking } from './api/booking/entities/booking.entity';
     OrderedItemModule,
 
     BookingModule,
+    TableModule,
   ],
 })
 export class AppModule {}
