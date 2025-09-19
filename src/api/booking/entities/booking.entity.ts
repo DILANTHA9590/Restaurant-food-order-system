@@ -1,10 +1,14 @@
 import { flatten } from '@nestjs/common';
+import { Room } from 'src/api/room/entities/room.entity';
+import { User } from 'src/api/user/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 export enum BookingStatus {
@@ -59,4 +63,11 @@ export class Booking {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
+   // Relations
+  @ManyToOne(() => Room, (room) => room.bookings, { eager: true })
+  @JoinColumn({ name: "roomId" })
+  room: Room;
+
+ 
 }
