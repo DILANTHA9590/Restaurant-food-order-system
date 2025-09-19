@@ -1,3 +1,4 @@
+import { Booking } from 'src/api/booking/entities/booking.entity';
 import { Order } from 'src/api/order/entities/order.entity';
 import {
   Column,
@@ -50,5 +51,8 @@ export class User {
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
+
+   @OneToMany(() => Booking, (booking) => booking.user)
+  bookings: Booking[];
 }
 
