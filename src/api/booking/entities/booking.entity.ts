@@ -69,5 +69,8 @@ export class Booking {
   @JoinColumn({ name: "roomId" })
   room: Room;
 
- 
+   // User relation
+  @ManyToOne(() => User, (user) => user.bookings, { eager: true })
+  @JoinColumn({ name: "userId" })
+  user: User;
 }
