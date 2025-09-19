@@ -13,6 +13,8 @@ import { Category } from './api/category/entities/category.entity';
 import { Menuitem } from './api/menuitem/entities/menuitem.entity';
 import { Order } from './api/order/entities/order.entity';
 import { OrderedItem } from './api/ordered-item/entities/ordered-item.entity';
+import { BookingModule } from './api/booking/booking.module';
+import { Booking } from './api/booking/entities/booking.entity';
 
 @Module({
   imports: [
@@ -29,14 +31,14 @@ import { OrderedItem } from './api/ordered-item/entities/ordered-item.entity';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User,Category,Menuitem,Order ,OrderedItem],
+        entities: [User,Category,Menuitem,Order ,OrderedItem,Booking],
         autoLoadEntities: true,
         synchronize: false,
         logging: true,
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem]),
+    TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking]),
 
     UserModule,
 
@@ -49,6 +51,8 @@ import { OrderedItem } from './api/ordered-item/entities/ordered-item.entity';
     OrderModule,
 
     OrderedItemModule,
+
+    BookingModule,
   ],
 })
 export class AppModule {}
