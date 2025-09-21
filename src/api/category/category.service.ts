@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,6 +31,7 @@ export class CategoryService {
 
   return{
     savedCategory ,
+    statusCode:HttpStatus.CREATED,
     message:"Category created successfully"
 
   }
@@ -39,7 +40,7 @@ export class CategoryService {
 
 
 
-  async getAllCategory():Promise<{message?:string , categories:Category[]}>{
+  async getAllCategory(){
 
 
 
@@ -53,9 +54,11 @@ export class CategoryService {
         categories
       }
     }
-    return {
-      categories
 
+
+    return {
+      statusCode:HttpStatus.OK,
+      categories,
     }
 
 
