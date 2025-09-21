@@ -3,8 +3,8 @@ import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from '../booking/entities/booking.entity';
-import { Table } from './entities/table.entity';
-import { Repository } from 'typeorm';
+import { Table, TableStatus } from './entities/table.entity';
+import { Not, Repository } from 'typeorm';
 import { genarateId } from '../common/interfaces/utills/booking-number';
 
 @Injectable()
@@ -31,16 +31,39 @@ export class TableService {
   }
 
   
+  }
 
 
 
 
+ async   getAvailbeTable()
+    {
 
+
+
+      const getAvilbleTable= await this.tableRepository.find({where:{
+        status:Not(TableStatus.BOOKED)
+      }})
+if(getAvilbleTable.length ===0){
+  return{
+    message:"No available table found",
+    data:[],
+    statusCode:HttpStatus.OK
+  }
 
 
 
   
+}
+ return{
+    data:getAvilbleTable,
+    statusCode:HttpStatus.OK
   }
+
+
+
+    }
+  
 
   findAll() {
     return `This action returns all table`;
