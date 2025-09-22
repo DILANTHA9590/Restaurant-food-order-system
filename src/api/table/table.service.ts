@@ -30,40 +30,75 @@ export class TableService {
     statusCode:HttpStatus.CREATED,
   }
 
-  
   }
 
 
 
 
- async   getAvailbeTable()
-    {
+// get availnle  tables 
+async getAvailableTable(page: number = 1, limit: number = 10) {
+  const [result, total] = await this.tableRepository.findAndCount({
+    where: {
+      status: Not(TableStatus.BOOKED),
+    },
+    skip: (page - 1) * limit, // offset
+    take: limit,              // limit
+  });
 
-
-
-      const getAvilbleTable= await this.tableRepository.find({where:{
-        status:Not(TableStatus.BOOKED)
-      }})
-if(getAvilbleTable.length ===0){
-  return{
-    message:"No available table found",
-    data:[],
-    statusCode:HttpStatus.OK
+  if (result.length === 0) {
+    return {
+      message: "No available table found",
+      data: [],
+      total,
+      page,
+      limit,
+      statusCode: HttpStatus.OK,
+    };
   }
 
-
-
-  
+  return {
+    message: "Available tables fetched successfully",
+    data: result,
+    total,        // total rows
+    page,         // current page
+    limit,        // per page
+    statusCode: HttpStatus.OK,
+  };
 }
- return{
-    data:getAvilbleTable,
-    statusCode:HttpStatus.OK
+
+//get booken table details
+async getBookedTable(page: number = 1, limit: number = 10) {
+  const [result, total] = await this.tableRepository.findAndCount({
+    where: {
+      status: Not(TableStatus.AVAILABLE),
+    },
+    skip: (page - 1) * limit, // offset
+    take: limit,              // limit
+  });
+
+  if (result.length === 0) {
+    return {
+      message: "No available table found",
+      data: [],
+      total,
+      page,
+      limit,
+      statusCode: HttpStatus.OK,
+    };
   }
 
+  return {
+    message: "Available tables fetched successfully",
+    data: result,
+    total,        // total rows
+    page,         // current page
+    limit,        // per page
+    statusCode: HttpStatus.OK,
+  };
+}
 
 
-    }
-  
+
 
   findAll() {
     return `This action returns all table`;
