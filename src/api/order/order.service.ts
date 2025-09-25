@@ -47,6 +47,7 @@ export class OrderService {
 const savedOrder = await this.orderRepository.save(newOrder)
   
 
+
      let allProductTotal = 0
      let  menuItemQtyTotal = 0
 
@@ -198,10 +199,4 @@ searchTerm = searchTerm || ""
   }
 
 
-
-
-  
-
-
-  
 }
