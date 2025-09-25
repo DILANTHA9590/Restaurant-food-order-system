@@ -36,20 +36,17 @@ export class Booking {
   @Column({ type: 'int' })
   numberOfGuests: number;
 
-  @Column({ type: 'date' })
-  bookingDate: Date; // reservation date/time
-
   @Column({ nullable: true })
   specialRequest: string;
 
   @Column({nullable:false})
   email:string
   
-  @Column({ nullable: false})
-  starttime: string;
+  @Column({type:"timestamp", nullable:true})
+  startDateTime: Date;
 
-  @Column({ nullable: false})
-  endtime: string;
+  @Column({type:"timestamp", nullable:true})
+  endDateTime: Date;
 
 
   @Column({
