@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -28,6 +28,7 @@ export class TableService {
   return{
     message:"Table created succsessfully",
     statusCode:HttpStatus.CREATED,
+    tableData
   }
 
   }
@@ -98,11 +99,30 @@ async getBookedTable(page: number = 1, limit: number = 10) {
 }
 
 
+ async updateTable(id:string, updateTableDto:UpdateTableDto){
 
 
-  findAll() {
-    return `This action returns all table`;
+  const existingTable = await this.tableRepository.findOne({where:{id:id}})
+
+
+  if(!existingTable){
+    throw new  NotFoundException("No  table found")
   }
+
+  const updateData =this.tableRepository.merge(existingTable,updateTableDto)
+
+
+ return await this.tableRepository.save(updateData)
+
+
+  return {
+    message :"Table created successfully",
+    statusCode: HttpStatus.OK,
+  }
+
+
+ }
+
 
   findOne(id: number) {
     return `This action returns a #${id} table`;
