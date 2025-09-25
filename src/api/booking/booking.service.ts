@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { Booking, BookingStatus } from './entities/booking.entity';
@@ -9,6 +9,7 @@ import { genarateId } from '../common/interfaces/utills/booking-number';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { Table, TableStatus } from '../table/entities/table.entity';
 import { User } from '../user/entities/user.entity';
+import { STATUS_CODES } from 'http';
 
 @Injectable()
 export class BookingService {
@@ -47,14 +48,16 @@ if(!existingTable){
   })
 
 
-
-return   await this.bookingRepository.save(newBooking)
-  // await this.tableRepository.save({
-  //   ...existingTable,status:TableStatus.BOOKED
-  // })
-
+  await this.bookingRepository.save(newBooking)
+  await this.tableRepository.save({
+    ...existingTable,status:TableStatus.BOOKED
+  })
 
 
+return{
+  message:"Table Bokking successfully",
+  statusCode :HttpStatus.CREATED
+}
 
     
 
