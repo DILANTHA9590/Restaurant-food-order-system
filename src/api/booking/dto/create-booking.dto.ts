@@ -32,9 +32,8 @@ export class CreateBookingDto {
   numberOfGuests: number;
 
   @ApiProperty({ example: '2025-09-20', description: 'Booking date (YYYY-MM-DD)' })
-  @IsDate({ message: 'Booking date must be a valid date' })
-  @Type(() => Date)   
-  bookingDate: Date;
+  @IsString({ message: 'Special request must be a string' })
+  bookingDate: string;
 
   @ApiPropertyOptional({ example: 'Vegetarian meal requested', description: 'Special request if any' })
   @IsOptional()
