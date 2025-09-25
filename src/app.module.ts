@@ -40,7 +40,7 @@ import { Table } from './api/table/entities/table.entity';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking]),
+    TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking,Table]),
 
     UserModule,
 
