@@ -12,11 +12,6 @@ export class TableController {
     return this.tableService.create(createTableDto);
   }
 
-  @Get()
-  findAll() {
-    return this.tableService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.tableService.findOne(+id);
