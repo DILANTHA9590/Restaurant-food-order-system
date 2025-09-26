@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { Booking, BookingStatus } from './entities/booking.entity';
@@ -25,22 +25,43 @@ async create(id:string,req:any ,createBookingDto: CreateBookingDto) {
 
 const {sub}=req.user
 
-
-
 const existingTable = await this.tableRepository.findOne({ where: { id } });
 if(!existingTable){
   throw new NotFoundException("This Table id not found")
 }
 
+  const {bookingDate,startTime ,endTime} = createBookingDto
+
+  const today  = new Date()
+  const tommorow= new Date(today)
+  tommorow.setDate(today.getDate() +1)
+  tommorow.setHours(23, 59, 59, 999); 
+  const requestDate = new Date(bookingDate);
+  console.log((requestDate));
+ 
+
+  
+  const startDateTime = new Date(`${bookingDate} ${startTime}`)
+  const endDateTime = new Date(`${bookingDate} ${endTime}`)
+
+
 
   const count = await this.bookingRepository.count({})
   const bookingId = genarateId("BKD",count)
 
+  if(requestDate<today){
+       throw new BadRequestException(
+      `Invalid booking data You cannot book for a past date.`
+    );
+  }
 
-  const {bookingDate,startTime ,endTime} = createBookingDto
+  if(requestDate>tommorow){
+    throw new BadRequestException("You cant Book table more than onme day")
+  }
 
-  const startDateTime = new Date(`${bookingDate} ${startTime}`)
-  const endDateTime = new Date(`${bookingDate} ${endTime}`)
+
+
+
 
   const newBooking = this.bookingRepository.create({
     ...createBookingDto,bookingId:bookingId,startDateTime:startDateTime,endDateTime:endDateTime
@@ -147,15 +168,6 @@ return{
 }
 
 
-
-
-async  quickBooking(){
-
-  
-
-  
-
-}
 
   
 
