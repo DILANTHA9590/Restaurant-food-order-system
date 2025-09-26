@@ -168,6 +168,82 @@ return{
 }
 
 
+async  quickBooking(req:any,createBookingDto:CreateBookingDto){
+
+
+
+
+const {bookingDate,startTime,endTime} =  createBookingDto
+const today  = new Date()
+  const tommorow= new Date(today)
+  tommorow.setDate(today.getDate() +1)
+  tommorow.setHours(23, 59, 59, 999); 
+  const requestDate = new Date(bookingDate);
+  console.log((requestDate));
+ 
+  const startDateTime = new Date(`${bookingDate} ${startTime}`)
+  const endDateTime = new Date(`${bookingDate} ${endTime}`)
+
+  if(requestDate<today){
+       throw new BadRequestException(
+      `Invalid booking data You cannot book for a past date.`
+    );
+  }
+
+  if(requestDate>tommorow){
+    throw new BadRequestException("You cant Book table more than onme day")
+  }
+
+
+
+
+const table = await this.tableRepository.find({where:{status:TableStatus.AVAILABLE}})
+
+
+  if (!table) {
+    throw new BadRequestException("No available tables at the moment.");
+  }
+const availbleTable = table[0]
+
+
+  const count = await this.bookingRepository.count({})
+  const bookingId = genarateId("BKD",count)
+
+const {sub}=req.user
+const newBooking = this.bookingRepository.create({
+    ...createBookingDto,bookingId:bookingId,startDateTime:startDateTime,endDateTime:endDateTime
+    ,table:{id:availbleTable.id} as Table,
+    user:{id:sub} as User
+  })
+  await this.bookingRepository.save(newBooking)
+  await this.tableRepository.save({
+    ...availbleTable,status:TableStatus.BOOKED
+  })
+
+
+return{
+  message:"Table Bokking successfully",
+  statusCode :HttpStatus.CREATED
+}
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+  
+
+  
+
+}
 
   
 
