@@ -18,18 +18,12 @@ export class BookingController {
   }
 
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookingService.findOne(+id);
+  @Post()
+  QuckBooking(@Req()req:any , @Body() createBookingDto: CreateBookingDto) {
+  
+    return this.bookingService.quickBooking(  req, createBookingDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
-    return this.bookingService.update(+id, updateBookingDto);
-  }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bookingService.remove(+id);
-  }
+
 }
