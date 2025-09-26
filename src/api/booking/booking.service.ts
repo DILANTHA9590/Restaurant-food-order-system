@@ -3,7 +3,7 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { Booking, BookingStatus } from './entities/booking.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Equal, In, LessThan, MoreThan, Not, Repository } from 'typeorm';
+import { Between, Equal, ILike, In, LessThan, MoreThan, Not, Repository } from 'typeorm';
 import { equal } from 'assert';
 import { genarateId } from '../common/interfaces/utills/booking-number';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
@@ -36,6 +36,7 @@ if(!existingTable){
   const count = await this.bookingRepository.count({})
   const bookingId = genarateId("BKD",count)
 
+
   const {bookingDate,startTime ,endTime} = createBookingDto
 
   const startDateTime = new Date(`${bookingDate} ${startTime}`)
@@ -58,27 +59,53 @@ return{
   message:"Table Bokking successfully",
   statusCode :HttpStatus.CREATED
 }
-
-    
-
-
-
-
-
-
-
-
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} booking`;
-  }
 
-  update(id: number, updateBookingDto: UpdateBookingDto) {
-    return `This action updates a #${id} booking`;
-  }
+  
+async getAllActiveBooking(
+  searchTerm: string,
+  page: number = 1,
+  limit: number = 10,
+) {
+  const [data, total] = await this.bookingRepository.findAndCount({
+    where: [
+      { id: ILike(`%${searchTerm}%`), status: BookingStatus.COMPLETED },
+      { bookingId: ILike(`%${searchTerm}%`), status: BookingStatus.COMPLETED },
+      { table: { tableId: ILike(`%${searchTerm}%`) }, status: BookingStatus.COMPLETED },
+    ],
+    relations: ['table'],
+    skip: (page - 1) * limit,
+    take: limit,// optional ordering,
+    order:{createdAt:'DESC'}
+  });
 
-  remove(id: number) {
-    return `This action removes a #${id} booking`;
-  }
+  return {
+    message: 'Active bookings retrieved successfully',
+    statusCode: HttpStatus.OK,
+    data,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+}
+
+
+
+
+
+async  quickBooking(){
+
+
+
+  
+
+}
+
+  
+
+  
 }
