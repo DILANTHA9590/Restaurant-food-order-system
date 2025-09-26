@@ -17,6 +17,7 @@ export enum BookingStatus {
   CONFIRMED = 'CONFIRMED',
   CANCELLED = 'CANCELLED',
   COMPLETED = 'COMPLETED',
+  EXPIRED = 'EXPIRED'
 }
 
 @Entity('bookings')
@@ -52,7 +53,7 @@ export class Booking {
   @Column({
     type: 'enum',
     enum: BookingStatus,
-    default: BookingStatus.CONFIRMED,
+    default: BookingStatus.COMPLETED,
   })
   status: BookingStatus;
 
