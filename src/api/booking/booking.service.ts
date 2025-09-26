@@ -94,12 +94,41 @@ async getAllActiveBooking(
 }
 
 
+async getAllExpiredBooking(  searchTerm: string,
+  page: number = 1,
+  limit: number = 10,){
+const [data, total] = await this.bookingRepository.findAndCount({
+    where: [
+      { id: ILike(`%${searchTerm}%`), status: BookingStatus.EXPIRED },
+      { bookingId: ILike(`%${searchTerm}%`), status: BookingStatus.EXPIRED },
+      { table: { tableId: ILike(`%${searchTerm}%`) }, status: BookingStatus.EXPIRED },
+    ],
+    relations: ['table'],
+    skip: (page - 1) * limit,
+    take: limit,// optional ordering
+  });
+
+  return {
+    message: 'Active bookings retrieved successfully',
+    statusCode: HttpStatus.OK,
+    data,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+}
+    
+
+
 
 
 
 async  quickBooking(){
 
-
+  
 
   
 
