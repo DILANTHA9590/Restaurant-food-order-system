@@ -122,6 +122,29 @@ const [data, total] = await this.bookingRepository.findAndCount({
 }
     
 
+async getBookingByUserId(req:any){
+  const {sub}= req.user
+
+  const booking = await this.bookingRepository.find({where:{user:{id:sub}},
+    order:{id:'DESC'}
+  })
+
+  if(booking.length==0){
+    return {
+      message :"Booking not found",
+      statusCode:200,
+      data:booking
+    }
+  }
+
+return{
+   message :"Booking not found",
+      statusCode:200,
+      data:booking
+
+}
+
+}
 
 
 
