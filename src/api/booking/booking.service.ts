@@ -220,30 +220,55 @@ const newBooking = this.bookingRepository.create({
 
 
 return{
-  message:"Table Bokking successfully",
+  message:"Table Booking successfully",
   statusCode :HttpStatus.CREATED
 }
 
-
-
-
-
-
- 
-
-
-
-
-
-
-
-  
-
-  
-
 }
 
-  
+
+async setAvialbleExpiredBooking(){
+
+const today = new Date()
+
+const expiredBooking = await this.bookingRepository.find({where :{endDateTime:LessThan(today),
+  status:BookingStatus.COMPLETED
+}})
+
+if(expiredBooking.length==0){
+   console.log("⏳ No expired bookings found");
+    return;
+}
+
+
+ for(const booking of expiredBooking ){
+  const {table} = booking
+
+//set Expired Booking Status
+ booking.status=BookingStatus.EXPIRED
+ await this.bookingRepository.save(booking);
+
+  //set availble expired booking table  
+if (booking.table) {
+      booking.table.status = TableStatus.AVAILABLE;
+      await this.tableRepository.save(booking.table);
+    }
+
+
+ console.log(`✅ Booking ${booking.id} expired → Table ${booking.table.id} released`);
+
+
+
+ }
+
+
+
+
+
+
+
+
+}
 
   
 }
