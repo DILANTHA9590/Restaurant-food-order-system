@@ -17,6 +17,7 @@ import { BookingModule } from './api/booking/booking.module';
 import { Booking } from './api/booking/entities/booking.entity';
 import { TableModule } from './api/table/table.module';
 import { Table } from './api/table/entities/table.entity';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { Table } from './api/table/entities/table.entity';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
