@@ -195,12 +195,10 @@ const today  = new Date()
   }
 
 
-
-
 const table = await this.tableRepository.find({where:{status:TableStatus.AVAILABLE}})
 
 
-  if (!table) {
+  if (table.length==0) {
     throw new BadRequestException("No available tables at the moment.");
   }
 const availbleTable = table[0]
