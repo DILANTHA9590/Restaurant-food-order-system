@@ -21,7 +21,13 @@ export class BookingController {
 
 
 
-
+  @Post('active')
+  @Cron('0 * * * *')
+ setAvialbleExpiredBooking() {
+  
+    return this.bookingService.setAvialbleExpiredBooking(); 
+  }
+  
   @Post(':id')
   create(@Param('id') id:string, @Req()req:any , @Body() createBookingDto: CreateBookingDto) {
   
