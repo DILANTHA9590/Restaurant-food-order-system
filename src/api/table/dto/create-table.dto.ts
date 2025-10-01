@@ -20,7 +20,8 @@ export class CreateTableDto {
     example: TableStatus.AVAILABLE
   })
   @IsEnum(TableStatus, { message: `Status must be one of: ${Object.values(TableStatus).join(', ')}` })
-  status: TableStatus;
+  @IsOptional()
+  status?: TableStatus;
 
   @ApiProperty({ 
     description: 'Images for the table', 
