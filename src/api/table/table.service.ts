@@ -23,7 +23,9 @@ export class TableService {
   if(count===0) count +1
   const tableId = genarateId("TBL",count);
 
-  const tableData = await this.tableRepository.save({...createTableDto,tableId:tableId})
+  const tableData = await this.tableRepository.save({...createTableDto,tableId:tableId,
+    status:TableStatus.AVAILABLE
+  })
 
   return{
     message:"Table created succsessfully",
