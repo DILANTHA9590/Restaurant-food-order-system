@@ -268,8 +268,17 @@ export class BookingService {
   }
 
   async deleteBooking(id: string) {
-    const bookingId = await this.bookingRepository.findOne({
+    const existingBooking = await this.bookingRepository.findOne({
       where: { id: id },
     });
+
+    if(!existingBooking){
+      throw new NotFoundException("This booking id not found")
+    }
+    await this.bookingRepository.remove(existingBooking)
+    return {
+      message : "Booking Deleted successfully"
+
+    }
   }
 }
