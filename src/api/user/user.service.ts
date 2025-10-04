@@ -82,6 +82,15 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
 
-    const saveduser = await this.userRepository;
+    existingUser.isBlocked = !existingUser.isBlocked;
+
+    await this.userRepository.save(existingUser);
+    const newStatus= existingUser.isBlocked ? "Block"  : "Active"
+
+    return{
+      message :  `User ${newStatus} successfully`
+    }
+
+    
   }
 }
