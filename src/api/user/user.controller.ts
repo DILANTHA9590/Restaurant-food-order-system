@@ -59,7 +59,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  @Roles('admin')
+  @Roles('admin', 'customer') //admin
   async remove(@Param('id') id: string) {
     const result = await this.userService.remove(id);
   }
