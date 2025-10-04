@@ -8,12 +8,15 @@ import jwt from 'jsonwebtoken';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { User } from '../user/entities/user.entity';
 import { CreateUserDto } from '../user/dto/create-user.dto';
+import { UserVerification } from '../user-verification/entities/user-verification.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(UserVerification)
+    private readonly userVerifyRepository: Repository<UserVerification>,
   ) {}
   async create(createUserDto: CreateUserDto) {
     const { email, password } = createUserDto;
@@ -31,6 +34,18 @@ export class AuthService {
       ...createUserDto,
       password: hashPassword,
     });
+
+
+    const date = new Date()
+    const otp = Math.floor(10000 + Math.random() * 90000);
+    await this.userVerifyRepository.save({
+      email:createUserDto.email,
+      otp:otp,
+      expireTime: new Date(date.getTime() + 15 * 60000) // 15 minutes later
+    })
+
+
+
 
     return {
       message: 'User created successfully',
