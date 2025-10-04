@@ -89,6 +89,9 @@ async getAllActiveBooking(
   page: number = 1,
   limit: number = 10,
 ) {
+
+
+  searchTerm = searchTerm || ""
   const [data, total] = await this.bookingRepository.findAndCount({
     where: [
       { id: ILike(`%${searchTerm}%`), status: BookingStatus.COMPLETED },
@@ -116,8 +119,12 @@ async getAllActiveBooking(
 
 
 async getAllExpiredBooking(  searchTerm: string,
+
   page: number = 1,
   limit: number = 10,){
+
+
+
 const [data, total] = await this.bookingRepository.findAndCount({
     where: [
       { id: ILike(`%${searchTerm}%`), status: BookingStatus.EXPIRED },
@@ -257,16 +264,14 @@ if (booking.table) {
 
  console.log(`✅ Booking ${booking.id} expired → Table ${booking.table.id} released`);
 
-
-
  }
+}
 
 
 
+async deleteBooking(id:string){
 
-
-
-
+  const bookingId= await this.bookingRepository.findOne({where:{id:id}})
 
 }
 
