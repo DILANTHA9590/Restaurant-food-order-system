@@ -43,4 +43,10 @@ export class BookingController {
   ) {
     return this.bookingService.create(id, req, createBookingDto);
   }
+
+
+  @Delete(':id')
+  deleteBooking(@Param('id') id:string){
+    return this.bookingService.deleteBooking(id)
+  }
 }
