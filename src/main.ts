@@ -11,24 +11,20 @@ async function bootstrap() {
     .setTitle('API Documentation')
     .setDescription('User API endpoints')
     .setVersion('1.0')
-    .addBearerAuth(
-      {
-  type: 'http',
-  scheme: 'bearer',
-  bearerFormat: 'JWT',
-  name: 'JWT',              
-  description: 'Enter JWT token', 
-  in: 'header',             
-}
-
-    ) // for JWT auth
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'JWT',
+      description: 'Enter JWT token',
+      in: 'header',
+    }) // for JWT auth
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
 
-
-    app.useGlobalPipes(
+  app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // extra fields strip karanawa
       forbidNonWhitelisted: true,
@@ -36,10 +32,9 @@ async function bootstrap() {
     }),
   );
 
-  const port =process.env.PORT
+  const port = process.env.PORT;
   await app.listen(port || 3000);
-  console.log("Swagger Running: http://localhost:3000/api-docs")
-  console.log(`Running Port: ${port}`)
+  console.log('Swagger Running: http://localhost:3000/api-docs');
+  console.log(`Running Port: ${port}`);
 }
 bootstrap();
-

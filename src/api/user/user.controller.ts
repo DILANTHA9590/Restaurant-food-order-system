@@ -1,4 +1,3 @@
-
 import {
   Controller,
   Get,
@@ -25,22 +24,17 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')
 @Controller('user')
-  @UseGuards(JwtAuthGuard ,RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-
-
-   @Get('profile')
-     @Roles('customer', 'admin')
-async  getProfile(@Req() req) {
+  @Get('profile')
+  @Roles('customer', 'admin')
+  async getProfile(@Req() req) {
     return req.user; // decoded JWT payload
     //  getProfile(@Req() req) {
     // return this.userService.getProfile(req.user); // ✅ user එ
-  
-}
-
-  
+  }
 
   @Get()
   @Roles('admin')
@@ -48,30 +42,25 @@ async  getProfile(@Req() req) {
     return this.userService.findAll(searchTerm);
   }
 
-  @Get("getbyid")
-  @Roles('admin','customer')
-  findOne( @Req()req:{user:JwtPayloadDto} ,id: string) {
-    return this.userService.findOne(id,req.user );
+  @Get('getbyid')
+  @Roles('admin', 'customer')
+  findOne(@Req() req: { user: JwtPayloadDto }, id: string) {
+    return this.userService.findOne(id, req.user);
   }
   @Put(':id')
-  @Roles('admin','customer')
+  @Roles('admin', 'customer')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-const result =await  this.userService.update(id, updateUserDto);
+    const result = await this.userService.update(id, updateUserDto);
 
-return {
-  message : "User updated successfully",
-  data:result
-}
+    return {
+      message: 'User updated successfully',
+      data: result,
+    };
   }
-
 
   @Delete(':id')
   @Roles('admin')
   async remove(@Param('id') id: string) {
-   const result =await this.userService.remove(id);
-
-   if(result){
-  return {message: "User deleted successfully"}
-   }
+    const result = await this.userService.remove(id);
   }
 }

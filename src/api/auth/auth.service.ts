@@ -63,9 +63,7 @@ export class AuthService {
       payLoad, // 👉 user data (id, email, roles, etc.)
       process.env.JWT_KEY || 'default_secret', // 👉 secret key from .env file
       // { expiresIn: '1h' }, // 👉 token will expire in 1 hour
-    ); 
-
-
+    );
 
     return {
       message: 'Login successful',

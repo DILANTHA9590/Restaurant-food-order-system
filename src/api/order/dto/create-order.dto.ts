@@ -1,49 +1,53 @@
-import { Type } from "class-transformer";
-import { IsString, IsNotEmpty, IsEmail, IsNumber, IsUUID, IsOptional, IsArray, ValidateNested } from "class-validator";
-import { CreateOrderedItemDto } from "src/api/ordered-item/dto/create-ordered-item.dto";
+import { Type } from 'class-transformer';
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  IsNumber,
+  IsUUID,
+  IsOptional,
+  IsArray,
+  ValidateNested,
+} from 'class-validator';
+import { CreateOrderedItemDto } from 'src/api/ordered-item/dto/create-ordered-item.dto';
 
 export class CreateOrderDto {
-  @IsString({ message: "Order ID must be a string" })
+  @IsString({ message: 'Order ID must be a string' })
   @IsOptional()
   orderId?: string;
 
-  @IsNumber({}, { message: "Total price must be a valid number" })
+  @IsNumber({}, { message: 'Total price must be a valid number' })
   @IsOptional()
   totalPrice?: number;
 
-  @IsNumber({}, { message: "Discount price must be a valid number" })
+  @IsNumber({}, { message: 'Discount price must be a valid number' })
   @IsOptional()
   discountPrice?: number;
 
-  @IsEmail({}, { message: "Invalid email format" })
-  @IsNotEmpty({ message: "Email is required" })
+  @IsEmail({}, { message: 'Invalid email format' })
+  @IsNotEmpty({ message: 'Email is required' })
   email: string;
 
-  @IsString({ message: "Mobile number must be a string" })
-  @IsNotEmpty({ message: "Mobile number is required" })
+  @IsString({ message: 'Mobile number must be a string' })
+  @IsNotEmpty({ message: 'Mobile number is required' })
   mobileNo: string;
 
-  @IsString({ message: "Payment ID must be a string" })
+  @IsString({ message: 'Payment ID must be a string' })
   @IsOptional()
   paymentId: string;
-  
 
-  @IsString({ message: "Address must be a string" })
-  @IsNotEmpty({ message: "Address is required" })
+  @IsString({ message: 'Address must be a string' })
+  @IsNotEmpty({ message: 'Address is required' })
   address: string;
-
-
 
   @IsOptional()
   @IsArray()
-  @ValidateNested({each:true})
-  @Type(()=> CreateOrderedItemDto)
-  orderedItems:CreateOrderedItemDto[]
-  
+  @ValidateNested({ each: true })
+  @Type(() => CreateOrderedItemDto)
+  orderedItems: CreateOrderedItemDto[];
 
-
-//   // relationship walata input
-//   @IsUUID("all", { message: "Invalid user ID format" })
-//   @IsNotEmpty({ message: "User ID is required" })
-//   userId: string;
+  //   // relationship walata input
+  //   @IsUUID("all", { message: "Invalid user ID format" })
+  //   @IsNotEmpty({ message: "User ID is required" })
+  //   userId: string;
 }

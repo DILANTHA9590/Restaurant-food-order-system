@@ -48,11 +48,9 @@ export class User {
   @UpdateDateColumn({ nullable: false })
   updatedAt: Date;
 
-
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 
-   @OneToMany(() => Booking, (booking) => booking.user)
+  @OneToMany(() => Booking, (booking) => booking.user)
   bookings: Booking[];
 }
-

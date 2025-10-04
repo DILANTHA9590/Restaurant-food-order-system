@@ -17,7 +17,7 @@ export enum BookingStatus {
   CONFIRMED = 'CONFIRMED',
   CANCELLED = 'CANCELLED',
   COMPLETED = 'COMPLETED',
-  EXPIRED = 'EXPIRED'
+  EXPIRED = 'EXPIRED',
 }
 
 @Entity('bookings')
@@ -25,13 +25,13 @@ export class Booking {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({unique:true})
-  bookingId:string
+  @Column({ unique: true })
+  bookingId: string;
 
-  @Column({nullable:false})
+  @Column({ nullable: false })
   customerName: string;
 
-  @Column({nullable:false})
+  @Column({ nullable: false })
   customerContact: string;
 
   @Column({ type: 'int' })
@@ -40,15 +40,14 @@ export class Booking {
   @Column({ nullable: true })
   specialRequest: string;
 
-  @Column({nullable:false})
-  email:string
-  
-  @Column({type:"timestamp", nullable:true})
+  @Column({ nullable: false })
+  email: string;
+
+  @Column({ type: 'timestamp', nullable: true })
   startDateTime: Date;
 
-  @Column({type:"timestamp", nullable:true})
+  @Column({ type: 'timestamp', nullable: true })
   endDateTime: Date;
-
 
   @Column({
     type: 'enum',
@@ -63,12 +62,12 @@ export class Booking {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
- @ManyToOne(() => Table, (table) => table.bookings, { eager: true })
-  @JoinColumn({ name: "tableId" }) 
- table: Table;
+  @ManyToOne(() => Table, (table) => table.bookings, { eager: true })
+  @JoinColumn({ name: 'tableId' })
+  table: Table;
 
-   // User relation
+  // User relation
   @ManyToOne(() => User, (user) => user.bookings, { eager: true })
-  @JoinColumn({ name: "userId" })
+  @JoinColumn({ name: 'userId' })
   user: User;
 }

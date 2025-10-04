@@ -62,9 +62,6 @@
 // })
 // export class AppModule {}
 
-
-
-
 import { Module } from '@nestjs/common';
 
 import { UserModule } from './api/user/user.module';
@@ -103,14 +100,30 @@ import { ScheduleModule } from '@nestjs/schedule';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User,Category,Menuitem,Order ,OrderedItem,Booking,Table],
+        entities: [
+          User,
+          Category,
+          Menuitem,
+          Order,
+          OrderedItem,
+          Booking,
+          Table,
+        ],
         autoLoadEntities: true,
         synchronize: true,
         // logging: true,
       }),
       inject: [ConfigService],
     }),
-TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking,Table]),
+    TypeOrmModule.forFeature([
+      User,
+      Category,
+      Menuitem,
+      Order,
+      OrderedItem,
+      Booking,
+      Table,
+    ]),
 
     UserModule,
 
@@ -129,6 +142,3 @@ TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking,Tabl
   ],
 })
 export class AppModule {}
-
-
-        

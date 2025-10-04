@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderedItem } from './entities/ordered-item.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([OrderedItem])],
+  imports: [TypeOrmModule.forFeature([OrderedItem])],
   controllers: [OrderedItemController],
   providers: [OrderedItemService],
 })

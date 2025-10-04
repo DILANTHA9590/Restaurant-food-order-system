@@ -1,33 +1,39 @@
-import { IsArray, IsNumber, IsOptional, IsString, IsBoolean, IsNotEmpty } from "class-validator";
+import {
+  IsArray,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsBoolean,
+  IsNotEmpty,
+} from 'class-validator';
 
 export class CreateMenuitemDto {
-
-  @IsArray({ message: "Images must be an array" })
+  @IsArray({ message: 'Images must be an array' })
   @IsOptional()
-  @IsNotEmpty({ message: "Images array cannot be empty" })
+  @IsNotEmpty({ message: 'Images array cannot be empty' })
   image?: string[];
-  
-  @IsString({ message: "Name is required and must be a string" })
-  @IsNotEmpty({ message: "Name cannot be empty" })
+
+  @IsString({ message: 'Name is required and must be a string' })
+  @IsNotEmpty({ message: 'Name cannot be empty' })
   name: string;
 
-  @IsArray({ message: "altNames must be an array of strings" })
+  @IsArray({ message: 'altNames must be an array of strings' })
   @IsOptional()
   altNames?: string[];
 
-  @IsNumber({}, { message: "Price must be a number" })
-  @IsNotEmpty({ message: "Price cannot be empty" })
+  @IsNumber({}, { message: 'Price must be a number' })
+  @IsNotEmpty({ message: 'Price cannot be empty' })
   price: number;
 
-  @IsNumber({}, { message: "Last price must be a number" })
-  @IsNotEmpty({ message: "Last price cannot be empty" })
+  @IsNumber({}, { message: 'Last price must be a number' })
+  @IsNotEmpty({ message: 'Last price cannot be empty' })
   lastPrice: number;
 
-  @IsString({ message: "Description must be a string" })
+  @IsString({ message: 'Description must be a string' })
   @IsOptional()
   description?: string;
 
-  @IsBoolean({ message: "Availability must be boolean" })
+  @IsBoolean({ message: 'Availability must be boolean' })
   @IsOptional()
   availability?: boolean;
 

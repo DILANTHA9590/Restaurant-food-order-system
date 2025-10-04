@@ -1,4 +1,9 @@
-import { ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,89 +13,69 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class CategoryService {
   constructor(
-    @InjectRepository(Category)private readonly categoryRepository: Repository<Category>,
-  ){}
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
+  ) {}
   async create(createCategoryDto: CreateCategoryDto) {
+    const { categoryName } = createCategoryDto;
 
+    const existingCategory = await this.categoryRepository.findOne({
+      where: { categoryName: categoryName },
+    });
 
-    const {categoryName} = createCategoryDto
-
-
-    const existingCategory = await this.categoryRepository.findOne({where:{categoryName:categoryName}})
-
-    if(existingCategory){
-      throw new ConflictException("Category with this name already exists");
+    if (existingCategory) {
+      throw new ConflictException('Category with this name already exists');
     }
 
-    const category =  this.categoryRepository.create(
-    createCategoryDto 
-    )
+    const category = this.categoryRepository.create(createCategoryDto);
 
-  const savedCategory = await this.categoryRepository.save(category);
-
-
-  return{
-    savedCategory ,
-    statusCode:HttpStatus.CREATED,
-    message:"Category created successfully"
-
-  }
-
-  }
-
-
-
-  async getAllCategory(){
-
-
-
-    const categories = await this.categoryRepository.find()
-
-
-    if(categories.length==0){
-
-      return{
-        message:"No Category items found",
-        categories
-      }
-    }
-
+    const savedCategory = await this.categoryRepository.save(category);
 
     return {
-      statusCode:HttpStatus.OK,
-      categories,
-    }
-
-
+      savedCategory,
+      statusCode: HttpStatus.CREATED,
+      message: 'Category created successfully',
+    };
   }
 
+  async getAllCategory() {
+    const categories = await this.categoryRepository.find();
 
- async updateCategory(id:string , updateCategoryDto:UpdateCategoryDto){
-
-
-
-   const existingCategory = await this.categoryRepository.findOne({where:{id:id}})
-
-    if(!existingCategory){
-      throw new NotFoundException("This category id not  found");
+    if (categories.length == 0) {
+      return {
+        message: 'No Category items found',
+        categories,
+      };
     }
 
+    return {
+      statusCode: HttpStatus.OK,
+      categories,
+    };
+  }
 
-    Object.assign(existingCategory,updateCategoryDto)
+  async updateCategory(id: string, updateCategoryDto: UpdateCategoryDto) {
+    const existingCategory = await this.categoryRepository.findOne({
+      where: { id: id },
+    });
 
+    if (!existingCategory) {
+      throw new NotFoundException('This category id not  found');
+    }
 
-  await this.categoryRepository.save(existingCategory)
+    Object.assign(existingCategory, updateCategoryDto);
 
-   return {
-    message: "Category updated successfully",
-  };
-    
+    await this.categoryRepository.save(existingCategory);
 
- }
+    return {
+      message: 'Category updated successfully',
+    };
+  }
 
-
-   async deleteCategory(id: string) {
-    const existingCategory = await this.categoryRepository.findOne({ where: { id } });
+  async deleteCategory(id: string) {
+    const existingCategory = await this.categoryRepository.findOne({
+      where: { id },
+    });
 
     if (!existingCategory) {
       throw new NotFoundException('Category not found');
@@ -103,9 +88,3 @@ export class CategoryService {
     };
   }
 }
-
-
-
-
-
-

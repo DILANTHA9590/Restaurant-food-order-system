@@ -7,7 +7,7 @@ import { Category } from '../category/entities/category.entity';
 import { OrderedItem } from '../ordered-item/entities/ordered-item.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Menuitem ,Category, OrderedItem])],
+  imports: [TypeOrmModule.forFeature([Menuitem, Category, OrderedItem])],
   controllers: [MenuitemController],
   providers: [MenuitemService],
 })
