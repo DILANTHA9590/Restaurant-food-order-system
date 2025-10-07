@@ -12,7 +12,7 @@ id:string
 email:string
 
 @Column()
-Otp:string
+otp:number
 
 @Column({type:'timestamp'})
 expireTime:Date
