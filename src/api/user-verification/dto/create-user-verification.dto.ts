@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, IsDateString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsDateString, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserVerificationDto {
@@ -7,8 +7,8 @@ export class CreateUserVerificationDto {
   email: string;
 
   @ApiProperty({ example: '482913' })
-  @IsString({ message: 'OTP must be a valid string.' })
-  otp: string;
+  @IsNumber({},{ message: 'OTP must be a number.' })
+  otp: Number;
 
   @ApiProperty({ example: '2025-10-08T23:59:00.000Z' })
   @IsNotEmpty({ message: 'Expire time is required.' })
