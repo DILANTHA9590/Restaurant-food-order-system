@@ -41,12 +41,9 @@ export class AuthService {
     await this.userVerifyRepository.save({
       email:createUserDto.email,
       otp:otp,
-      expireTime: new Date(date.getTime() + 15 * 60000) // 15 minutes later
+      expireTime: new Date(date.getTime() + 2 * 60000) // 15 minutes later
     })
-
-
-
-
+    
     return {
       message: 'User created successfully',
       user: newUser,
