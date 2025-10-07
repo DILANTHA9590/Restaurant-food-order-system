@@ -9,6 +9,7 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { User } from '../user/entities/user.entity';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserVerification } from '../user-verification/entities/user-verification.entity';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(UserVerification)
     private readonly userVerifyRepository: Repository<UserVerification>,
+    private readonly mailService: MailService,
   ) {}
   async create(createUserDto: CreateUserDto) {
     const { email, password } = createUserDto;
@@ -43,7 +45,8 @@ export class AuthService {
       otp:otp,
       expireTime: new Date(date.getTime() + 2 * 60000) // 15 minutes later
     })
-    
+
+    this.mailService.sendOtpEmail(email,otp)//send
     return {
       message: 'User created successfully',
       user: newUser,
