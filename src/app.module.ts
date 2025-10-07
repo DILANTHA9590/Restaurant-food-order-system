@@ -18,6 +18,7 @@
 // import { TableModule } from './api/table/table.module';
 // import { Table } from './api/table/entities/table.entity';
 // import { ScheduleModule } from '@nestjs/schedule';
+// import { UserVerification } from './api/user-verification/entities/user-verification.entity';
 
 // @Module({
 //   imports: [
@@ -35,14 +36,14 @@
 //         username: configService.get<string>('DB_USERNAME'),
 //         password: configService.get<string>('DB_PASS'),
 //         database: configService.get<string>('DB_NAME'),
-//         entities: [User,Category,Menuitem,Order ,OrderedItem,Booking,Table],
+//         entities: [User,Category,Menuitem,Order ,OrderedItem,Booking,Table ,UserVerification],
 //         autoLoadEntities: true,
 //         synchronize: false,
 //         logging: true,
 //       }),
 //       inject: [ConfigService],
 //     }),
-//     TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking,Table]),
+//     TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking,Table,UserVerification]),
 
 //     UserModule,
 
@@ -82,6 +83,7 @@ import { Booking } from './api/booking/entities/booking.entity';
 import { TableModule } from './api/table/table.module';
 import { Table } from './api/table/entities/table.entity';
 import { ScheduleModule } from '@nestjs/schedule';
+import { UserVerification } from './api/user-verification/entities/user-verification.entity';
 
 @Module({
   imports: [
@@ -108,6 +110,7 @@ import { ScheduleModule } from '@nestjs/schedule';
           OrderedItem,
           Booking,
           Table,
+          UserVerification
         ],
         autoLoadEntities: true,
         synchronize: true,
@@ -123,6 +126,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       OrderedItem,
       Booking,
       Table,
+      UserVerification
     ]),
 
     UserModule,
