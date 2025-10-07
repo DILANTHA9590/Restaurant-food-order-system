@@ -34,6 +34,23 @@ export class MailService {
     }
   }
 
+  async sendOtpEmail(email: string, otp: number) {
+    const subject = '🔐 Verify Your Email - Food Order System';
+    const html = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+        <h2>Welcome to Food Order System 🍔</h2>
+        <p>Dear Customer,</p>
+        <p>To verify your email, please use the following One-Time Password (OTP):</p>
+        <h1 style="color: #007bff; letter-spacing: 3px;">${otp}</h1>
+        <p>This OTP will expire in <strong>2 minutes</strong>. Do not share it with anyone.</p>
+        <hr/>
+        <p>If you didn’t request this verification, please ignore this email.</p>
+        <p>— The Food Order System Team 🍽️</p>
+      </div>
+    `;
+
+    return this.sendMail(email, subject, '', html);
+  }
 
 
 
