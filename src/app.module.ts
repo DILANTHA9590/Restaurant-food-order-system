@@ -19,6 +19,8 @@
 // import { Table } from './api/table/entities/table.entity';
 // import { ScheduleModule } from '@nestjs/schedule';
 // import { UserVerification } from './api/user-verification/entities/user-verification.entity';
+// import { UserVerificationModule } from './api/user-verification/user-verification.module';
+// import { MailModule } from './api/mail/mail.module';
 
 // @Module({
 //   imports: [
@@ -43,6 +45,7 @@
 //       }),
 //       inject: [ConfigService],
 //     }),
+//     MailModule,
 //     TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking,Table,UserVerification]),
 
 //     UserModule,
@@ -59,6 +62,7 @@
 
 //     BookingModule,
 //     TableModule,
+//     UserVerificationModule
 //   ],
 // })
 // export class AppModule {}
@@ -84,6 +88,7 @@ import { TableModule } from './api/table/table.module';
 import { Table } from './api/table/entities/table.entity';
 import { ScheduleModule } from '@nestjs/schedule';
 import { UserVerification } from './api/user-verification/entities/user-verification.entity';
+import { MailModule } from './api/mail/mail.module';
 
 @Module({
   imports: [
@@ -118,6 +123,7 @@ import { UserVerification } from './api/user-verification/entities/user-verifica
       }),
       inject: [ConfigService],
     }),
+    MailModule,
     TypeOrmModule.forFeature([
       User,
       Category,
