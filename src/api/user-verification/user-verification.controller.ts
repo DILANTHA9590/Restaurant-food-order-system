@@ -8,9 +8,15 @@ export class UserVerificationController {
   constructor(private readonly userVerificationService: UserVerificationService) {}
 
   @Post()
-  create(@Body()updateUserVerificationDto : UpdateUserVerificationDto) {
+  verifyOtp(@Body()updateUserVerificationDto : UpdateUserVerificationDto) {
     return this.userVerificationService.verifyOtp(updateUserVerificationDto);
   }
+
+  @Post('resend')
+  resendOtp(@Body()updateUserVerificationDto : UpdateUserVerificationDto) {
+    return this.userVerificationService.resendOtp(updateUserVerificationDto);
+  }
+
 
   
 }
