@@ -49,10 +49,19 @@ export class MailService {
       </div>
     `;
 
-    return this.sendMail(email, subject, '', html);
+    return await this.sendMail(email, subject, '', html);
   }
 
 
+async sendMailOrderConfirmation(email: string, orderId: string) {
 
+
+}
+
+
+
+async sendMailTableConfimration(){
+
+}
 
 }
