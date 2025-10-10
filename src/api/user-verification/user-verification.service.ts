@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserVerification } from './entities/user-verification.entity';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserVerificationService {
@@ -13,9 +14,16 @@ export class UserVerificationService {
     private readonly userVerifyRepository:Repository<UserVerification>,
        @InjectRepository(User)
         private readonly userRepository: Repository<User>,
+         private readonly mailService: MailService,
   ) {}
 
 async verifyOtp( dto: UpdateUserVerificationDto) {
+
+const  checkIsVerify= await this.userRepository.findOne({where:{email:dto.email}})
+
+if(checkIsVerify?.isVerified){
+  throw new BadRequestException("This email own user already verify")
+}
 
 
   const existing_email = await this.userVerifyRepository.find({
@@ -24,7 +32,7 @@ async verifyOtp( dto: UpdateUserVerificationDto) {
 });
 
 if(existing_email.length == 0){
-   throw new BadRequestException('No OTP found for this email. Please request a new one.');
+   throw new BadRequestException('No OTP found for this email. Please Enter correct email.');
 }
 const [verifyRecord]= existing_email
 
@@ -47,9 +55,13 @@ return{
 }
 
 
-  
 
-  
 }
+
+
+
+
+
+
 
 }
