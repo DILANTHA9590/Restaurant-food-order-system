@@ -59,7 +59,48 @@ return{
 }
 
 
+async resendOtp(dto: UpdateUserVerificationDto) {
+const  checkIsVerify= await this.userRepository.findOne({where:{email:dto.email}})
+const nowTime = new Date()
 
+if(checkIsVerify?.isVerified){
+  throw new BadRequestException("This email own user already verify")
+}
+
+ const existing_email = await this.userVerifyRepository.find({
+ where: { email: dto.email },
+ order: { createdAt: 'DESC' },
+  
+  })
+
+if(existing_email.length==0){
+  throw new NotFoundException("Email not found")
+}
+
+if(existing_email[0].expireTime  > nowTime){
+  throw new BadRequestException("Please wait before requesting another OTP")
+}
+
+  const otp = Math.floor(10000 + Math.random() * 90000);
+  await this.userVerifyRepository.save({
+  email:dto.email,
+  otp:otp,
+  expireTime: new Date(nowTime.getTime() + 2 * 60000) // 2 minutes from now
+    })
+
+
+ await this.mailService.sendOtpEmail(dto.email,otp)
+
+
+ return{
+   statusCode:HttpStatus.OK,
+   message:"Email resend succuessfully"
+
+ }
+
+
+
+}
 
 
 
