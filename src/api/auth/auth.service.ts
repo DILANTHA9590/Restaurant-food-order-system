@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,6 +10,7 @@ import { User } from '../user/entities/user.entity';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserVerification } from '../user-verification/entities/user-verification.entity';
 import { MailService } from '../mail/mail.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +28,7 @@ export class AuthService {
       where: { email: email },
     });
     if (existingUser) {
-      throw new Error('User with this email already exists');
+      throw new ConflictException('User with this email already exists');
     }
 
     const hashPassword = await argon2.hash(password);
@@ -43,10 +44,10 @@ export class AuthService {
     await this.userVerifyRepository.save({
       email:createUserDto.email,
       otp:otp,
-      expireTime: new Date(date.getTime() + 2 * 60000) // 15 minutes later
+      expireTime: new Date(date.getTime() + 2 * 60000) // 2 minutes from now
     })
 
-    this.mailService.sendOtpEmail(email,otp)//send
+   await this.mailService.sendOtpEmail(email,otp)//send
     return {
       message: 'User created successfully',
       user: newUser,
