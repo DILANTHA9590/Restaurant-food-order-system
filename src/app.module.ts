@@ -62,7 +62,8 @@ import { MailModule } from './api/mail/mail.module';
 
     BookingModule,
     TableModule,
-    UserVerificationModule
+    UserVerificationModule,
+    DailyIncomeModule
   ],
 })
 export class AppModule {}
@@ -89,6 +90,7 @@ export class AppModule {}
 // import { ScheduleModule } from '@nestjs/schedule';
 // import { UserVerification } from './api/user-verification/entities/user-verification.entity';
 // import { MailModule } from './api/mail/mail.module';
+import { DailyIncomeModule } from './api/daily_income/daily_income.module';
 
 // @Module({
 //   imports: [
