@@ -21,6 +21,10 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { UserVerification } from './api/user-verification/entities/user-verification.entity';
 import { UserVerificationModule } from './api/user-verification/user-verification.module';
 import { MailModule } from './api/mail/mail.module';
+import { DailyIncome } from './api/daily_income/entities/daily_income.entity';
+import { DailyIncomeModule } from './api/daily_income/daily_income.module';
+
+
 
 @Module({
   imports: [
@@ -38,7 +42,7 @@ import { MailModule } from './api/mail/mail.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User,Category,Menuitem,Order ,OrderedItem,Booking,Table ,UserVerification],
+        entities: [User,Category,Menuitem,Order ,OrderedItem,Booking,Table ,UserVerification,DailyIncome],
         autoLoadEntities: true,
         synchronize: false,
         logging: true,
@@ -46,7 +50,7 @@ import { MailModule } from './api/mail/mail.module';
       inject: [ConfigService],
     }),
     MailModule,
-    TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking,Table,UserVerification]),
+    TypeOrmModule.forFeature([User,Category,Menuitem,Order ,OrderedItem,Booking,Table,UserVerification,DailyIncome]),
 
     UserModule,
 
@@ -63,7 +67,8 @@ import { MailModule } from './api/mail/mail.module';
     BookingModule,
     TableModule,
     UserVerificationModule,
-    DailyIncomeModule
+   DailyIncomeModule
+   
   ],
 })
 export class AppModule {}
@@ -90,7 +95,7 @@ export class AppModule {}
 // import { ScheduleModule } from '@nestjs/schedule';
 // import { UserVerification } from './api/user-verification/entities/user-verification.entity';
 // import { MailModule } from './api/mail/mail.module';
-import { DailyIncomeModule } from './api/daily_income/daily_income.module';
+// import { DailyIncome } from './api/daily_income/entities/daily_income.entity';
 
 // @Module({
 //   imports: [
