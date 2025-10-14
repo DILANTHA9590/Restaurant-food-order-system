@@ -12,9 +12,8 @@ export class DailyIncome {
   @Column('int', { default: 0 })
   totalOrders: number;
 
-  @Column('int', { default: 0 }) // Changed from decimal to int
-  totalIncome: number;
-
+@Column('decimal', { precision: 10, scale: 2, default: 0 })
+totalIncome: number;
   @Column('int', { default: 0 }) // Changed from decimal to int
   totalProfit: number;
 
