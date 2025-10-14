@@ -8,8 +8,7 @@ import { UpdateDailyIncomeDto } from './dto/update-daily-income.dto';
 export class DailyIncomeController {
   constructor(private readonly dailyIncomeService: DailyIncomeService) {}
 
-
-  @Cron('* * * * *')
+  @Cron('0 0 23 * * *')
   create() {
     console.log("run me s1 min")
     return this.dailyIncomeService.create();
