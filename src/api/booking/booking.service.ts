@@ -188,7 +188,6 @@ export class BookingService {
     tommorow.setDate(today.getDate() + 1);
     tommorow.setHours(23, 59, 59, 999);
     const requestDate = new Date(bookingDate);
-    console.log(requestDate);
 
     const startDateTime = new Date(`${bookingDate} ${startTime}`);
     const endDateTime = new Date(`${bookingDate} ${endTime}`);
