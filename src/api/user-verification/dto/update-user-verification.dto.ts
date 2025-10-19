@@ -4,11 +4,9 @@ import { IsEmail, IsNumber } from 'class-validator';
 
 export class UpdateUserVerificationDto  {
 
-      @ApiProperty({ example: 'dilantha9590@gmail.com' })
+      @ApiProperty({ example: 'nayanagithdilantha@gmail.com' })
       @IsEmail({}, { message: 'Please enter a valid email address.' })
       email: string;
 
-      @ApiProperty({ example: '482913' })
-      @IsNumber({},{ message: 'OTP must be a number.' })
-      otp: Number;
+
 }
