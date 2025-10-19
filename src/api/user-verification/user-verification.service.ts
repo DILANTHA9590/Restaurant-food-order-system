@@ -17,7 +17,7 @@ export class UserVerificationService {
          private readonly mailService: MailService,
   ) {}
 
-async verifyOtp( dto: UpdateUserVerificationDto) {
+async verifyOtp( dto: CreateUserVerificationDto) {
 
 const  checkIsVerify= await this.userRepository.findOne({where:{email:dto.email}})
 
