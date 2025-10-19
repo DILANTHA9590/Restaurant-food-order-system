@@ -24,6 +24,9 @@ import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { Table, TableStatus } from '../table/entities/table.entity';
 import { User } from '../user/entities/user.entity';
 import { STATUS_CODES } from 'http';
+import { MailService } from '../mail/mail.service';
+
+
 
 @Injectable()
 export class BookingService {
@@ -32,6 +35,7 @@ export class BookingService {
     private bookingRepository: Repository<Booking>,
     @InjectRepository(Table)
     private tableRepository: Repository<Table>,
+      private readonly mailService: MailService,
   ) {}
 
   async create(id: string, req: any, createBookingDto: CreateBookingDto) {
@@ -76,11 +80,14 @@ export class BookingService {
       user: { id: sub } as User,
     });
 
-    await this.bookingRepository.save(newBooking);
+
+const saved_Table =    await this.bookingRepository.save(newBooking);
     await this.tableRepository.save({
       ...existingTable,
       status: TableStatus.BOOKED,
     });
+
+
 
     return {
       message: 'Table Bokking successfully',
@@ -182,7 +189,10 @@ export class BookingService {
   }
 
   async quickBooking(req: any, createBookingDto: CreateBookingDto) {
-    const { bookingDate, startTime, endTime } = createBookingDto;
+
+
+    const {email} = req.user
+    const { bookingDate, startTime, endTime,customerName } = createBookingDto;
     const today = new Date();
     const tommorow = new Date(today);
     tommorow.setDate(today.getDate() + 1);
@@ -228,6 +238,9 @@ export class BookingService {
       ...availbleTable,
       status: TableStatus.BOOKED,
     });
+
+   await this.mailService.sendMailTableConfimration(email,bookingDate,startTime,endTime ,customerName ,availbleTable.tableId)
+
 
     return {
       message: 'Table Booking successfully',
