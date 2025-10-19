@@ -53,7 +53,7 @@ export class CreateBookingDto {
   specialRequest?: string;
 
   @ApiProperty({
-    example: 'customer@example.com',
+    example: 'nayanagithdilantha@gmail.com',
     description: 'Customer email address',
   })
   @IsNotEmpty({ message: 'Email is required' })
