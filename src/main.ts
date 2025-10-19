@@ -18,7 +18,8 @@ async function bootstrap() {
       name: 'JWT',
       description: 'Enter JWT token',
       in: 'header',
-    }) // for JWT auth
+    },
+    'JWT',) // for JWT auth
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
