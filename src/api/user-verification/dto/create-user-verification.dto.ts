@@ -2,7 +2,7 @@ import { IsEmail, IsNotEmpty, IsString, IsDateString, IsNumber } from 'class-val
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserVerificationDto {
-  @ApiProperty({ example: 'dilantha9590@gmail.com' })
+  @ApiProperty({ example: 'nayanagithdilantha@gmail.com' })
   @IsEmail({}, { message: 'Please enter a valid email address.' })
   email: string;
 

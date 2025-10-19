@@ -6,16 +6,26 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { TableService } from './table.service';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
+import { RolesGuard } from '../auth/role-guard/roles.guard';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../auth/role-guard/roles.decorator';
+
 
 @Controller('table')
+@ApiTags('Tables')
+// @ApiBearerAuth('JWT') 
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class TableController {
   constructor(private readonly tableService: TableService) {}
 
   @Post()
+  // @Roles('admin', 'customer')
   create(@Body() createTableDto: CreateTableDto) {
     return this.tableService.create(createTableDto);
   }
