@@ -27,14 +27,8 @@ if(orders.length==0){
   return console.log("No today Orders Found")
 }
 
-let totalIncome:number =0
-for(const order of orders){
-  const {totalPrice} =order
-  if(totalPrice){
-    totalIncome += totalPrice
-  }
+const totalIncome = orders.reduce((sum,l)=> sum + (l.totalPrice || 0), 0)
 
-}
 
 const saveddailyIncome= this.dailyIncomeRepository.create({
     date: today.toISOString().split('T')[0],
