@@ -74,6 +74,8 @@ export class AuthService {
       sub: existingUser?.id,
       email: existingUser?.email,
       role: existingUser?.role,
+      name:existingUser.name
+      
     };
     const token = jwt.sign(
       payLoad, // 👉 user data (id, email, roles, etc.)
