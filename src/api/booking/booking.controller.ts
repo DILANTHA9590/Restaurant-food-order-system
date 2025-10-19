@@ -17,6 +17,9 @@ import { JwtPayloadDto } from '../common/interfaces/jwt-payload.dto';
 import { RolesGuard } from '../auth/role-guard/roles.guard';
 import { Cron } from '@nestjs/schedule';
 import { Roles } from '../auth/role-guard/roles.decorator';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+
+@ApiBearerAuth('JWT') 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('booking')
 export class BookingController {
@@ -24,6 +27,11 @@ export class BookingController {
 
   @Post()
   @Roles('admin', 'customer')
+  @ApiOperation({
+    summary: 'Quick booking creation',
+    description:
+      'Allows admins or customers to quickly create a new booking by providing required details such as table, date, time, and customer info.',
+  })
   QuckBooking(@Req() req: any, @Body() createBookingDto: CreateBookingDto) {
     return this.bookingService.quickBooking(req, createBookingDto);
   }
