@@ -20,15 +20,7 @@ export class OrderedItemController {
     // return this.orderedItemService.create(createOrderedItemDto);
   }
 
-  @Get()
-  findAll() {
-    return this.orderedItemService.findAll();
-  }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderedItemService.findOne(+id);
-  }
 
   @Patch(':id')
   update(
