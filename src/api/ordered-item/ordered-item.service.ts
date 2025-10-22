@@ -12,19 +12,5 @@ export class OrderedItemService {
     private readonly orderedItemRepository: Repository<OrderedItem>,
   ) {}
 
-  findAll() {
-    return `This action returns all orderedItem`;
-  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} orderedItem`;
-  }
-
-  update(id: number, updateOrderedItemDto: UpdateOrderedItemDto) {
-    return `This action updates a #${id} orderedItem`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} orderedItem`;
-  }
 }
