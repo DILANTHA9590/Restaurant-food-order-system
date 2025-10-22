@@ -20,18 +20,4 @@ export class OrderedItemController {
     // return this.orderedItemService.create(createOrderedItemDto);
   }
 
-
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateOrderedItemDto: UpdateOrderedItemDto,
-  ) {
-    return this.orderedItemService.update(+id, updateOrderedItemDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderedItemService.remove(+id);
-  }
 }
