@@ -116,15 +116,4 @@ export class TableService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} table`;
-  }
-
-  update(id: number, updateTableDto: UpdateTableDto) {
-    return `This action updates a #${id} table`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} table`;
-  }
 }
