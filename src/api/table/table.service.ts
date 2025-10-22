@@ -108,7 +108,7 @@ export class TableService {
       updateTableDto,
     );
 
-    return await this.tableRepository.save(updateData);
+   await this.tableRepository.save(updateData);
 
     return {
       message: 'Table created successfully',
