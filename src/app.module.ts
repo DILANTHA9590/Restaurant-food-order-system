@@ -67,7 +67,8 @@ import { DailyIncomeModule } from './api/daily_income/daily_income.module';
     BookingModule,
     TableModule,
     UserVerificationModule,
-   DailyIncomeModule
+   DailyIncomeModule,
+   RatingModule
    
   ],
 })
@@ -96,6 +97,7 @@ export class AppModule {}
 // import { UserVerification } from './api/user-verification/entities/user-verification.entity';
 // import { MailModule } from './api/mail/mail.module';
 // import { DailyIncome } from './api/daily_income/entities/daily_income.entity';
+import { RatingModule } from './api/rating/rating.module';
 
 // @Module({
 //   imports: [
