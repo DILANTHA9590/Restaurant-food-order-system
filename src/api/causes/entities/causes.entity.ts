@@ -1,0 +1,34 @@
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+
+@Entity('causes')
+export class Causes {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  title: string;
+
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  category: string;
+
+  @Column({ type: 'int', default: 0 })
+  priority: number; // 1-10 scale
+
+  @Column({ type: 'varchar', length: 50, default: 'active' })
+  status: string; // active, inactive, resolved, pending
+
+  @Column({ type: 'text', nullable: true })
+  targetAudience: string;
+
+  @Column({ type: 'int', default: 0 })
+  estimatedBudget: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
